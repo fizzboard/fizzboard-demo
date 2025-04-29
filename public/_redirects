@@ -1,2 +1,2 @@
-# Redirect all routes to index.html, accounting for base URL
-/fizzboard-demo/* /index.html 200
+# Redirect all routes to index.html
+/* /index.html 200
