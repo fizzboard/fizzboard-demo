@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script type="text/javascript">
-      // Store the URL we want to redirect to
-      sessionStorage.redirect = location.pathname;
+      // Store the full URL we want to redirect to (including query parameters)
+      sessionStorage.redirect = location.pathname + location.search;
       // Redirect to the main page
       location.replace('/fizzboard-demo/');
     </script>
