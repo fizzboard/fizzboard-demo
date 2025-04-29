@@ -1,9 +1,9 @@
+import { FizzboardRoutes } from './routes'
 
-export const FizzboardDemo = () => {
+
+export const FizzboardApp = () => {
   
   return (
-    <div>
-      <h1>Fizzboard Demo</h1>
-    </div>
+    <FizzboardRoutes />
   )
 }
