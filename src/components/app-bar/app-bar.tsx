@@ -3,7 +3,7 @@ import { Toolbar } from "@mui/material";
 import { AppBar } from "@mui/material";
 import { Link } from 'react-router';
 import { HorizontalCenteredFlexContainerDiv, HorizontalSpacerDiv } from "../common-divs";
-import logoUrl from "../../assets/logo-icon.svg";
+import logoUrl from "../../assets/fizzboard-logo.svg";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
