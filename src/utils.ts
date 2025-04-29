@@ -1,0 +1,43 @@
+import { FzbBoardId, FzbScreenId, FzbScreenSlotId, FzbScreenSlotIdSchema } from "./zod-types/branded-strings";
+import { getUniqueId } from 'tinybase';
+
+// Use Vite's import.meta.env to get the base URL
+export const SERVER_URL = import.meta.env.BASE_URL || 'http://localhost:5173';
+
+
+export const getColumnLetter = (index: number) => {
+  return String.fromCharCode(65 + index); // 65 is ASCII for 'A'
+};
+
+
+export const getGridCoordinate = (rowIndex: number, colIndex: number): FzbScreenSlotId => {
+  return `${getColumnLetter(colIndex)}${rowIndex + 1}` as FzbScreenSlotId;
+};
+
+
+export const createFizzBoardId = (): FzbBoardId => {
+  const tbUniqueId = getUniqueId();
+  return tbUniqueId as FzbBoardId;
+};
+
+export const createScreenIdFromRowAndColumn = (boardId: FzbBoardId, rowIndex: number, colIndex: number): FzbScreenId => {
+  return `${boardId}:${getColumnLetter(colIndex)}${rowIndex + 1}` as FzbScreenId;
+};
+
+export const createScreenId = (boardId: FzbBoardId, gridCoordinate: FzbScreenSlotId): FzbScreenId => {
+  return `${boardId}:${gridCoordinate}` as FzbScreenId;
+};
+
+export const createScreenUrl = (screenId: FzbScreenId) => {
+  return `${SERVER_URL}/screens/${screenId}`;
+};
+
+export const getBoardIdFromScreenId = (screenId: FzbScreenId): FzbBoardId => {
+  return screenId.split(':')[0] as FzbBoardId;
+};
+
+export const getScreenSlotIdFromScreenId = (screenSlotId: FzbScreenId): FzbScreenSlotId => {
+  const screenSlotIdStr = screenSlotId.split(':')[1];
+  const parsedScreenSlotId = FzbScreenSlotIdSchema.parse(screenSlotIdStr);
+  return parsedScreenSlotId;
+};
