@@ -2,8 +2,7 @@ import { Paper } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { FzbBoardId } from "~/zod-types/branded-strings";
-import { createScreenIdFromRowAndColumn, createScreenUrl, getGridCoordinate } from "~/utils";
-import { FzbScreenScanSchema } from "~/zod-types/screen-scan";
+import { getGridCoordinate, SERVER_URL } from "~/utils";
 import { Link } from "react-router-dom";
 import { useFizzBoardTbStoreData } from "~/tinybase/FizzBoardTbStoreBoardProvider";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
@@ -14,7 +13,6 @@ interface ScreenSlotProps {
   boardId: FzbBoardId;
   rowIndex: number;
   colIndex: number;
-  columnLetter: string;
 }
 
 interface Dimensions {
@@ -22,13 +20,10 @@ interface Dimensions {
   height: number;
 }
 
-export const ScreenContentComponent = ({ boardId, rowIndex, colIndex, columnLetter }: ScreenSlotProps) => {
+export const ScreenContentComponent = ({ boardId, rowIndex, colIndex }: ScreenSlotProps) => {
   const paperRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState<Dimensions | null>(null);
   const [screenPostData, setScreenPostData] = useState<FzbPostData | null>(null);
-
-  const screenId = createScreenIdFromRowAndColumn(boardId, rowIndex, colIndex);
-  const screenUrl = createScreenUrl(screenId);
 
   const gridCoordinate = getGridCoordinate(rowIndex, colIndex);
 
@@ -58,15 +53,18 @@ export const ScreenContentComponent = ({ boardId, rowIndex, colIndex, columnLett
     return () => observer.disconnect();
   }, []);
 
-  const screenScanJson = JSON.stringify(FzbScreenScanSchema.parse({
-    screenId,
-  }));
+  // const screenScanJson = JSON.stringify(FzbScreenScanSchema.parse({
+  //   screenId,
+  // }));
+
+  const sendPostToScreenPath = "/post-to-screen/" + boardId + ":" + gridCoordinate;
+  const sendPostToScreenUrl = SERVER_URL + sendPostToScreenPath;
 
   if (screenPostData) {
-    const screenSlotContent = JSON.stringify(screenPostData);
+    const screenContent = JSON.stringify(screenPostData);
 
     return (
-      <div>{screenSlotContent}</div>
+      <div>{screenContent}</div>
     )
   }
 
@@ -99,14 +97,15 @@ export const ScreenContentComponent = ({ boardId, rowIndex, colIndex, columnLett
       <div>
       </div>
       <QRCodeSVG 
-        value={screenScanJson}
+        // value={screenScanJson}
+        value={sendPostToScreenUrl}
         size={100}
         level="H"
       />
       <Link 
-        to={screenUrl}
+        to={sendPostToScreenUrl}
       >
-        {`${columnLetter}${rowIndex + 1}`}
+        {gridCoordinate}
       </Link>
     </Paper>
   )

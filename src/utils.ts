@@ -2,7 +2,11 @@ import { FzbBoardId, FzbScreenId, FzbScreenSlotId, FzbScreenSlotIdSchema } from 
 import { getUniqueId } from 'tinybase';
 
 // Use Vite's import.meta.env to get the base URL
-export const SERVER_URL = import.meta.env.BASE_URL || 'http://localhost:5173';
+export const SERVER_HOST = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5173'
+  : window.location.origin;
+
+export const SERVER_URL = SERVER_HOST + (import.meta.env.BASE_URL || '');
 
 
 export const getColumnLetter = (index: number) => {

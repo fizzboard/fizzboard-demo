@@ -8,7 +8,6 @@ import { FizzBoardAppFrame } from '~/components/app-frame/app-frame';
 import { APP_BAR_HEIGHT } from '~/components/app-bar/app-bar';
 import { FzbBoardId } from '~/zod-types/branded-strings';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { getColumnLetter } from '~/utils';
 import { Inspector } from "tinybase/ui-react-inspector"
 import { FizzBoardTbStoreBoardProvider } from '~/tinybase/FizzBoardTbStoreBoardProvider';
 
@@ -16,11 +15,12 @@ import { FizzBoardTbStoreBoardProvider } from '~/tinybase/FizzBoardTbStoreBoardP
 export const DemoBoard = () => {
   
   const { id } = useParams();
+  const boardId = id as FzbBoardId;
+
   const [searchParams] = useSearchParams();
   const rows = searchParams.get('rows') ?? 1;
   const columns = searchParams.get('columns') ?? 1;
 
-  const boardId = id as FzbBoardId;
   const rowCount = Number(rows);
   const columnCount = Number(columns);
 
@@ -92,7 +92,6 @@ export const DemoBoard = () => {
                 key={`${rowIndex}-${colIndex}`}
                 rowIndex={rowIndex}
                 colIndex={colIndex}
-                columnLetter={getColumnLetter(colIndex)}
               />
             ))
           ))}

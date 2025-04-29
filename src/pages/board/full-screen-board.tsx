@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { ScreenContentComponent } from '~/components/screen-content';
 import { useEffect, useState } from 'react';
-import { getColumnLetter } from '~/utils';
 import { FzbBoardId } from '~/zod-types/branded-strings';
 import { createFzbBoardSynchronizer } from '~/tinybase/tb-boards';
 import { Store } from 'tinybase/store';
@@ -65,7 +64,6 @@ export const FullScreenBoard = ({ boardId, rowCount, columnCount, onFullScreenCa
             key={`${rowIndex}-${colIndex}`}
             rowIndex={rowIndex}
             colIndex={colIndex}
-            columnLetter={getColumnLetter(colIndex)}
           />
         ))
       ))}
