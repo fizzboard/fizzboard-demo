@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import { ScreenContentComponent } from '~/components/screen-content';
 import { useEffect } from 'react';
 import { FzbBoardId } from '~/zod-types/branded-strings';
+import { FizzBoardTbStoreBoardProvider } from '~/tinybase/FizzBoardTbStoreBoardProvider';
 
 
 interface FullScreenBoardProps {
@@ -28,27 +29,29 @@ export const FullScreenBoard = ({ boardId, rowCount, columnCount, onFullScreenCa
 
   
   return (
-    <Box
-      sx={{
-        width: '100vw',
-        height: '100vh',
-        display: 'grid',
-        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-        gridTemplateRows: `repeat(${rowCount}, 1fr)`,
-        boxSizing: 'border-box',
-        backgroundColor: 'background.default',
-      }}
-    >
-      {Array.from({ length: rowCount }).map((_, rowIndex) => (
-        Array.from({ length: columnCount }).map((_, colIndex) => (
-          <ScreenContentComponent
-            boardId={boardId}
-            key={`${rowIndex}-${colIndex}`}
-            rowIndex={rowIndex}
-            colIndex={colIndex}
-          />
-        ))
-      ))}
-    </Box>
+    <FizzBoardTbStoreBoardProvider tbBoardStoreId={boardId}>
+      <Box
+        sx={{
+          width: '100vw',
+          height: '100vh',
+          display: 'grid',
+          gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+          gridTemplateRows: `repeat(${rowCount}, 1fr)`,
+          boxSizing: 'border-box',
+          backgroundColor: 'background.default',
+        }}
+      >
+        {Array.from({ length: rowCount }).map((_, rowIndex) => (
+          Array.from({ length: columnCount }).map((_, colIndex) => (
+            <ScreenContentComponent
+              boardId={boardId}
+              key={`${rowIndex}-${colIndex}`}
+              rowIndex={rowIndex}
+              colIndex={colIndex}
+            />
+          ))
+        ))}
+      </Box>
+    </FizzBoardTbStoreBoardProvider>
   );
 };
