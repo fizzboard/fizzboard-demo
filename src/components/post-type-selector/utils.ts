@@ -1,4 +1,4 @@
-import { createNewPostId, SERVER_URL } from "~/utils";
+import { createNewPostId } from "~/utils";
 import { FzbIframeLinkPostData } from "~/zod-types/posts/fzb-iframe-link-post";
 import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
 import { FzbPostData, FzbPostType } from "~/zod-types/posts/fzb-post";
@@ -19,7 +19,7 @@ export const createDefaultImagePostData = (): FzbImageLinkPostData => {
     id: createNewPostId(),
     name: "Image Post @ " + new Date().toISOString(),
     postType: "image-link",
-    imageUrl: "https://via.placeholder.com/150",
+    imageUrl: "https://georgekarbusphotography.com/wp-content/uploads/2018/04/best_orca_killer_whale_underwater_photos.jpg",
   };
 };
 
@@ -28,7 +28,7 @@ export const createDefaultIframePostData = (): FzbIframeLinkPostData => {
     id: createNewPostId(),
     name: "Iframe Post @ " + new Date().toISOString(),
     postType: "iframe-link",
-    iframeUrl: SERVER_URL,
+    iframeUrl: "https://fizzboard.github.io/fizzboard-demo/",
   };
 };
 

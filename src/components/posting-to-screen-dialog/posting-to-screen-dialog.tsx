@@ -1,7 +1,7 @@
 import { DialogContent, DialogTitle } from "@mui/material";
 import { Dialog } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useFizzBoardTbStoreData } from "~/tinybase/FizzBoardTbStoreBoardProvider";
+import { useFizzBoardTbStoreData } from "~/tinybase/FizzBoardTbStoreBoardScreensProvider";
 import { getScreenSlotIdFromScreenId } from "~/utils";
 import { FzbScreenId } from "~/zod-types/branded-strings";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";

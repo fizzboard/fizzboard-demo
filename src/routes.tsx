@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { DemoBoard } from "./pages/board";
+import { DemoBoardPage } from "./pages/board/demo-board-page";
 import { DemoBoardLauncher } from "./pages/board-config";
 import { DemoMyPosts } from "./pages/my-posts";
 import { DemoScreenSlot } from "./pages/screens-by-id";
@@ -17,7 +17,7 @@ export const FizzboardRoutes = () => {
         <Route path="/my-posts" element={<DemoMyPosts />} />
 
         <Route path="/boards/:id" element={
-          <DemoBoard 
+          <DemoBoardPage 
           />}
         />
 
