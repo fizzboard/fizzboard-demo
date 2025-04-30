@@ -2,13 +2,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { MergeableStore } from "tinybase/mergeable-store";
 import { Provider, useCreateMergeableStore, useCreatePersister, useCreateSynchronizer, useRowListener } from "tinybase/ui-react";
 import { createFizzBoardStore, createFizzBoardSynchronizer, createLocalFizzBoardPersister, FIZZBOARD_SCREEN_GRID_TABLE, POST_DATA_JSON_COLUMN_KEY } from "./tb-infrastructure";
-import { FzbBoardId, FzbScreenSlotId } from "~/zod-types/branded-strings";
+import { FzbBoardId, FzbScreenId, FzbScreenSlotId } from "~/zod-types/branded-strings";
 import { FzbPostData, FzbPostDataSchema } from "~/zod-types/posts/fzb-post";
+import { createScreenId } from "~/utils";
 
 
 export interface IFizzBoardTbStoreData {
   boardId: FzbBoardId;
-  gridPostsData: Map<FzbScreenSlotId, FzbPostData>;
+  gridPostsData: Map<FzbScreenId, FzbPostData>;
 
   setPostDataJsonForGridLocation: (gridLocation: FzbScreenSlotId, postData: FzbPostData) => void;
 }
@@ -16,14 +17,17 @@ export interface IFizzBoardTbStoreData {
 const FizzBoardTbStoreContext = createContext<IFizzBoardTbStoreData | null>(null);
 
 
-interface IFizzBoardTbStoreScreensProviderProps {
+interface IFizzBoardTbStoreBoardScreensProviderProps {
   children: React.ReactNode;
   tbBoardStoreId: FzbBoardId;
 }
 
-export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFizzBoardTbStoreScreensProviderProps) => {
+export const FizzBoardTbStoreBoardScreensProvider = ({ 
+  children,
+  tbBoardStoreId,
+}: IFizzBoardTbStoreBoardScreensProviderProps) => {
 
-  const [gridPostsData, setGridPostsData] = useState<Map<FzbScreenSlotId, FzbPostData>>(new Map());
+  const [gridPostsData, setGridPostsData] = useState<Map<FzbScreenId, FzbPostData>>(new Map());
 
   const store = useCreateMergeableStore(createFizzBoardStore);
 
@@ -64,7 +68,7 @@ export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFiz
   useRowListener(null, null, 
     (_store, tableId, _rowId) => {
       if (tableId === FIZZBOARD_SCREEN_GRID_TABLE) {
-        const newGridPostsData = new Map<FzbScreenSlotId, FzbPostData>();
+        const newGridPostsData = new Map<FzbScreenId, FzbPostData>();
 
         const gridLocations = store.getRowIds(tableId);
 
@@ -76,8 +80,9 @@ export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFiz
           
           const rawPostData = JSON.parse(postDataJson as string);
           const postData = FzbPostDataSchema.parse(rawPostData);
+          const screenId = createScreenId(tbBoardStoreId, gridLocation as FzbScreenSlotId);
 
-          newGridPostsData.set(gridLocation as FzbScreenSlotId, postData);
+          newGridPostsData.set(screenId, postData);
         });
 
         setGridPostsData(newGridPostsData);
@@ -98,11 +103,12 @@ export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFiz
   
   useEffect(() => {
     const initGridPostsData = () => {
-      const gridTable = store.getTable(FIZZBOARD_SCREEN_GRID_TABLE);
-      console.log("INIT TABLE");
-      console.log(gridTable);
+      // const gridTable = store.getTable(FIZZBOARD_SCREEN_GRID_TABLE);
+      // console.log("INIT TABLE");
+      // console.log(gridTable);
+
       const gridLocations = store.getRowIds(FIZZBOARD_SCREEN_GRID_TABLE);
-      const initialData = new Map<FzbScreenSlotId, FzbPostData>();
+      const initialData = new Map<FzbScreenId, FzbPostData>();
   
       gridLocations.forEach(gridLocation => {
         const postDataJson = store.getCell(FIZZBOARD_SCREEN_GRID_TABLE, gridLocation, 'postDataJson');
@@ -112,8 +118,9 @@ export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFiz
   
         const rawPostData = JSON.parse(postDataJson as string);
         const postData = FzbPostDataSchema.parse(rawPostData);
+        const screenId = createScreenId(tbBoardStoreId, gridLocation as FzbScreenSlotId);
   
-        initialData.set(gridLocation as FzbScreenSlotId, postData);
+        initialData.set(screenId, postData);
       });
   
       return initialData;
@@ -121,7 +128,7 @@ export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFiz
 
     const initialData = initGridPostsData();
     setGridPostsData(initialData);
-  }, [store]);
+  }, [store, tbBoardStoreId]);
 
 
   const value: IFizzBoardTbStoreData = {

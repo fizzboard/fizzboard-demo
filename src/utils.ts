@@ -31,7 +31,7 @@ export const createNewPostId = (): FzbPostId => {
 };
 
 
-export const createScreenIdFromRowAndColumn = (boardId: FzbBoardId, rowIndex: number, colIndex: number): FzbScreenId => {
+export const createScreenIdForRowAndColumn = (boardId: FzbBoardId, rowIndex: number, colIndex: number): FzbScreenId => {
   return `${boardId}:${getColumnLetter(colIndex)}${rowIndex + 1}` as FzbScreenId;
 };
 
@@ -51,4 +51,16 @@ export const getScreenSlotIdFromScreenId = (screenSlotId: FzbScreenId): FzbScree
   const screenSlotIdStr = screenSlotId.split(':')[1];
   const parsedScreenSlotId = FzbScreenSlotIdSchema.parse(screenSlotIdStr);
   return parsedScreenSlotId;
+};
+
+/**
+ * Joins multiple path segments into a single URL path, ensuring there's only a single slash between segments
+ * @param paths Array of path segments to join
+ * @returns Properly joined path string
+ */
+export const joinPaths = (...paths: string[]): string => {
+  return paths
+    .map(path => path.replace(/^\/+|\/+$/g, '')) // Remove leading and trailing slashes
+    .filter(Boolean) // Remove empty strings
+    .join('/');
 };

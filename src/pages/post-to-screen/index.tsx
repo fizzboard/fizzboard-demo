@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Inspector } from "tinybase/ui-react-inspector";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
 import { PostTypeSelector } from "~/components/post-type-selector";
-import { FizzBoardTbStoreBoardProvider } from "~/tinybase/FizzBoardTbStoreBoardProvider";
+import { FizzBoardTbStoreBoardScreensProvider } from "~/tinybase/FizzBoardTbStoreBoardScreensProvider";
 import { FzbPostId, FzbScreenId } from "~/zod-types/branded-strings";
 import { MyPostsCardGrid } from "../my-posts/card/my-posts-card-grid";
 import { useFizzBoardAppData } from "~/tinybase/tb-app";
@@ -38,7 +38,7 @@ export const PostToScreenPage = () => {
 
 
   return (
-    <FizzBoardTbStoreBoardProvider tbBoardStoreId={boardId}>
+    <FizzBoardTbStoreBoardScreensProvider tbBoardStoreId={boardId}>
       <FizzBoardAppFrame>
         <title>FizzBoard Demo - Post to Screen</title>
 
@@ -115,6 +115,6 @@ export const PostToScreenPage = () => {
         )}
 
       </FizzBoardAppFrame>
-    </FizzBoardTbStoreBoardProvider>
+    </FizzBoardTbStoreBoardScreensProvider>
   );
 };
