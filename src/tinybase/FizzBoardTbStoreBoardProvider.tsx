@@ -61,9 +61,6 @@ export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFiz
   });
   
 
-  const data = store.getTables();
-  console.log("DATA", data);
-
   useRowListener(null, null, 
     (_store, tableId, _rowId) => {
       if (tableId === FIZZBOARD_SCREEN_GRID_TABLE) {
@@ -125,8 +122,6 @@ export const FizzBoardTbStoreBoardProvider = ({ children, tbBoardStoreId }: IFiz
     const initialData = initGridPostsData();
     setGridPostsData(initialData);
   }, [store]);
-
-  console.log("GRID POSTS DATA", gridPostsData);
 
 
   const value: IFizzBoardTbStoreData = {

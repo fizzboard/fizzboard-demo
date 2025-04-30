@@ -1,4 +1,4 @@
-import { FzbBoardId, FzbScreenId, FzbScreenSlotId, FzbScreenSlotIdSchema } from "./zod-types/branded-strings";
+import { FzbBoardId, FzbPostId, FzbScreenId, FzbScreenSlotId, FzbScreenSlotIdSchema } from "./zod-types/branded-strings";
 import { getUniqueId } from 'tinybase';
 
 // Use Vite's import.meta.env to get the base URL
@@ -23,6 +23,13 @@ export const createFizzBoardId = (): FzbBoardId => {
   const tbUniqueId = getUniqueId();
   return tbUniqueId as FzbBoardId;
 };
+
+
+export const createNewPostId = (): FzbPostId => {
+  const tbUniqueId = getUniqueId();
+  return tbUniqueId as FzbPostId;
+};
+
 
 export const createScreenIdFromRowAndColumn = (boardId: FzbBoardId, rowIndex: number, colIndex: number): FzbScreenId => {
   return `${boardId}:${getColumnLetter(colIndex)}${rowIndex + 1}` as FzbScreenId;

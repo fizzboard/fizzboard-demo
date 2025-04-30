@@ -1,9 +1,7 @@
 import { Box } from '@mui/material';
 import { ScreenContentComponent } from '~/components/screen-content';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FzbBoardId } from '~/zod-types/branded-strings';
-import { createFzbBoardSynchronizer } from '~/tinybase/tb-boards';
-import { Store } from 'tinybase/store';
 
 
 interface FullScreenBoardProps {
@@ -14,19 +12,6 @@ interface FullScreenBoardProps {
 }
 
 export const FullScreenBoard = ({ boardId, rowCount, columnCount, onFullScreenCanceled }: FullScreenBoardProps) => {
-
-  const [store, setStore] = useState<Store | null>(null);
-
-  useEffect(() => {
-    const init = async () => {
-      const {store} = await createFzbBoardSynchronizer(boardId);
-      setStore(store);
-      const values = store.getValues();
-      console.log("store values");
-      console.log(values);
-    };
-    init();
-  }, [boardId]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -41,9 +26,6 @@ export const FullScreenBoard = ({ boardId, rowCount, columnCount, onFullScreenCa
     };
   }, [onFullScreenCanceled]);
 
-  if (!store) {
-    return null;
-  }
   
   return (
     <Box

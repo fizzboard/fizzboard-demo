@@ -65,14 +65,14 @@ export const DemoMyPosts = () => {
               color="primary"
               onClick={() => setIsAddTextPostDialogOpen(true)}
             >
-              Add Text Post
+              New Text Post
             </Button>
             <Button 
               variant="contained" 
               color="primary"
               onClick={() => setIsAddImagePostDialogOpen(true)}
             >
-              Add Image Post
+              New Image Post
             </Button>
           </Stack>
         </Box>

@@ -29,7 +29,6 @@ export const MyPostsCardGrid = (props: IMyPostsCardGridProps) => {
         alignItems: 'center',
         width: '100%',
         minHeight: '50vh',
-        p: 2
       }}
     >
       <Grid 

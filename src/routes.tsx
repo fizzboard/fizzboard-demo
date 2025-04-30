@@ -3,7 +3,6 @@ import { DemoBoard } from "./pages/board";
 import { DemoBoardLauncher } from "./pages/board-config";
 import { DemoMyPosts } from "./pages/my-posts";
 import { DemoScreenSlot } from "./pages/screens-by-id";
-import { TestPostToScreenPage } from "./pages/test/post-to-screen";
 import { LandingPage } from "./pages/landing";
 import { PostToScreenPage } from "./pages/post-to-screen";
 
@@ -23,7 +22,7 @@ export const FizzboardRoutes = () => {
         />
 
         <Route path="/screens/:id" element={<DemoScreenSlot />} />
-        <Route path="/test/post-to-screen" element={<TestPostToScreenPage />} />
+        {/* <Route path="/test/post-to-screen" element={<TestPostToScreenPage />} /> */}
       </Routes>
     </BrowserRouter>
   )
