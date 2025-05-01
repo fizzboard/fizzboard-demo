@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FzbBoardConfigSchema, FzbBoardGridDimensionsSchema } from "~/zod-types/screen-config";
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Typography, Link } from "@mui/material";
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Typography } from "@mui/material";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
 import { createFizzBoardId, SERVER_URL } from "~/utils";
 import { z } from "zod";
@@ -18,8 +18,8 @@ export const DemoBoardLauncher = () => {
     resolver: zodResolver(FzbBoardConfigSchema),
     defaultValues: {
       id: createFizzBoardId(),
-      name: "My FizzBoard Demo Board",
-      gridDimensions: "1x2",
+      name: "My Demo FizzBoard",
+      gridDimensions: "2x2",
     },
   });
 
@@ -37,6 +37,11 @@ export const DemoBoardLauncher = () => {
   const [rowCount, columnCount] = gridDimensions.split("x").map(Number);
 
   const launchBoardUrl = `${SERVER_URL}/boards/${watch("id")}?rows=${rowCount}&columns=${columnCount}`;
+
+  const onLaunchClicked = () => {
+    window.location.href = launchBoardUrl;
+    console.log(launchBoardUrl);
+  }
 
   return (
     <FizzBoardAppFrame>
@@ -88,11 +93,17 @@ export const DemoBoardLauncher = () => {
               )}
             </FormControl>
 
-            <Link href={launchBoardUrl}>
-              <Button type="button" variant="contained" color="secondary" fullWidth>
-                Launch FizzBoard
-              </Button>
-            </Link>
+            <Button 
+              type="button" 
+              variant="contained" 
+              color="secondary" 
+              fullWidth
+              onClick={() => {
+                onLaunchClicked();
+              }}
+            >
+              Launch
+            </Button>
           </Box>
         </form>
       </Box>

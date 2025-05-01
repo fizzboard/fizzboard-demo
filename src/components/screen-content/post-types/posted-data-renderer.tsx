@@ -6,7 +6,7 @@ import { Dimensions } from "../ScreenContentComponent";
 import { ScreenContentImageLinkComponent } from "./image-link/screen-content-image-link-component";
 
 
-interface PostedDataRendererProps {
+interface ScreenDataRendererProps {
   postedData: FzbPostData | null;
   
   dimensions: Dimensions | null;
@@ -14,16 +14,19 @@ interface PostedDataRendererProps {
   gridCoordinate: string;
 }
 
-export const PostedDataRenderer = ({
+export const ScreenDataRenderer = ({
   postedData: postData,
   dimensions,
   sendPostToScreenUrl,
   gridCoordinate,
-}: PostedDataRendererProps) => {
+}: ScreenDataRendererProps) => {
+
+  const defaultNoPostType = "np-put-your-post-here";
 
   if (!postData) {
     return (
       <NoPostComponent
+        noPostType={defaultNoPostType}
         dimensions={dimensions}
         sendPostToScreenUrl={sendPostToScreenUrl}
         gridCoordinate={gridCoordinate}

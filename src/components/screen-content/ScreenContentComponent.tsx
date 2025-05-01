@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { FzbScreenId } from "~/zod-types/branded-strings";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
-import { PostedDataRenderer } from "./post-types/posted-data-renderer";
+import { ScreenDataRenderer } from "./post-types/posted-data-renderer";
 
 export interface Dimensions {
   width: number;
@@ -59,7 +59,7 @@ export const ScreenContentComponent = ({
         gap: 1,
       }}
     >
-      <PostedDataRenderer
+      <ScreenDataRenderer
         postedData={screenPostData}
         dimensions={dimensions}
         sendPostToScreenUrl={sendPostToScreenUrl}
