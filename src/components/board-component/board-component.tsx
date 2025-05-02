@@ -2,28 +2,32 @@ import { IconButton } from "@mui/material";
 import { Box } from "@mui/material";
 import { APP_BAR_HEIGHT } from "../app-bar/app-bar";
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import { getGridCoordinate, joinPaths, SERVER_URL } from "~/utils";
+import { getGridCoordinate } from "~/utils";
 import { ScreenContentComponent } from "../screen-content/ScreenContentComponent";
 import { ScreenPost } from "~/zod-types/screen-post";
+import { createSendPostToScreenUrl } from "~/url-utils";
+import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
 
 
 interface BoardComponentProps {
   rowCount: number;
   columnCount: number;
-  isFullscreen: boolean;
-  
+  boardLocationSettingId: BoardLocationSettingId;
+    
   screenPosts: ScreenPost[];
   
+  isFullscreen: boolean;
   onRequestFullscreen: () => void;
 }
 
 export const BoardComponent = ({ 
   rowCount, 
   columnCount,
-  isFullscreen,
-  
+  boardLocationSettingId,
+    
   screenPosts,
   
+  isFullscreen,
   onRequestFullscreen,
 }: BoardComponentProps) => {
 
@@ -76,8 +80,7 @@ export const BoardComponent = ({
             const { screenId, postData } = screenPosts[screenIndex];
 
             const gridCoordinate = getGridCoordinate(rowIndex, colIndex);
-
-            const sendPostToScreenUrl = joinPaths(SERVER_URL, "/post-to-screen/", screenId);
+            const sendPostToScreenUrl = createSendPostToScreenUrl(screenId, boardLocationSettingId);
             
             return (
               <ScreenContentComponent

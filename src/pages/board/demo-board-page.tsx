@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { Inspector } from "tinybase/ui-react-inspector"
 import { FizzBoardTbStoreBoardScreensProvider } from '~/tinybase/FizzBoardTbStoreBoardScreensProvider';
 import { BoardComponentWrapper } from '~/components/board-component/board-component-wrapper';
+import { BoardLocationSettingId } from '~/zod-types/screen-config/board-location-setting';
 
 
 export const DemoBoardPage = () => {
@@ -18,6 +19,8 @@ export const DemoBoardPage = () => {
 
   const rowCount = Number(rows);
   const columnCount = Number(columns);
+
+  const boardLocationSettingId = (searchParams.get('setting') ?? "bls-other") as BoardLocationSettingId;
 
   const [isFullscreen, setIsFullscreen] = useState(false);
   
@@ -46,6 +49,7 @@ export const DemoBoardPage = () => {
           <BoardComponentWrapper
             rowCount={rowCount}
             columnCount={columnCount}
+            boardLocationSettingId={boardLocationSettingId}
             isFullscreen={isFullscreen}
             onRequestFullscreen={onRequestFullscreen}
           />
@@ -54,6 +58,7 @@ export const DemoBoardPage = () => {
             <BoardComponentWrapper
               rowCount={rowCount}
               columnCount={columnCount}
+              boardLocationSettingId={boardLocationSettingId}
               isFullscreen={isFullscreen}
               onRequestFullscreen={onRequestFullscreen}
             />

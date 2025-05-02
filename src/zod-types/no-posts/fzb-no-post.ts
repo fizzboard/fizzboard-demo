@@ -11,9 +11,10 @@ export const FzbNoPostConfigSchema = z.discriminatedUnion("noPostType", [
 ]);
 
 
-// Get all possible post type values programmatically
-export const FzbNoPostConfigTypeValues = FzbNoPostConfigSchema.options.map(
-  (schema) => schema.shape.noPostType.value
+export const FzbNoPostConfigTypeValues = z.union(
+  FzbNoPostConfigSchema.options.map(schema => schema.shape.noPostType)
 );
 
-export type FzbNoPostConfigType = typeof FzbNoPostConfigTypeValues[number];
+
+export type FzbNoPostConfigType = z.infer<typeof FzbNoPostConfigTypeValues>;
+

@@ -12,9 +12,19 @@ export const FzbPostDataSchema = z.discriminatedUnion("postType", [
 
 export type FzbPostData = z.infer<typeof FzbPostDataSchema>;
 
-// Get all possible post type values programmatically
-export const FzbPostTypeValues = FzbPostDataSchema.options.map(
-  (schema) => schema.shape.postType.value
+
+export const FzbPostDataTypeValues = z.union(
+  FzbPostDataSchema.options.map(schema => schema.shape.postType)
 );
 
-export type FzbPostType = typeof FzbPostTypeValues[number];
+
+export type FzbPostDataType = z.infer<typeof FzbPostDataTypeValues>;
+
+
+
+// // Get all possible post type values programmatically
+// export const FzbPostTypeValues = FzbPostDataSchema.options.map(
+//   (schema) => schema.shape.postType.value
+// );
+
+// export type FzbPostType = typeof FzbPostTypeValues[number];

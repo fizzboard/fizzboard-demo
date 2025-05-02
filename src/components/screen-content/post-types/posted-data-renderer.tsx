@@ -4,6 +4,7 @@ import { ScreenContentTextComponent } from "./text-content/screen-content-text-c
 import { ScreenContentIframeLinkComponent } from "./iframe-link/screen-content-iframe-link-component";
 import { Dimensions } from "../ScreenContentComponent";
 import { ScreenContentImageLinkComponent } from "./image-link/screen-content-image-link-component";
+import { FzbNoPostConfigType } from "~/zod-types/no-posts/fzb-no-post";
 
 
 interface ScreenDataRendererProps {
@@ -14,16 +15,18 @@ interface ScreenDataRendererProps {
   gridCoordinate: string;
 }
 
-export const ScreenDataRenderer = ({
-  postedData: postData,
-  dimensions,
-  sendPostToScreenUrl,
-  gridCoordinate,
-}: ScreenDataRendererProps) => {
+export const ScreenDataRenderer = (props: ScreenDataRendererProps) => {
 
-  const defaultNoPostType = "np-put-your-post-here";
+  const {
+    postedData,
+    dimensions,
+    sendPostToScreenUrl,
+    gridCoordinate,
+  } = props;
 
-  if (!postData) {
+  if (!postedData) {
+    const defaultNoPostType: FzbNoPostConfigType = "np-put-your-post-here";
+
     return (
       <NoPostComponent
         noPostType={defaultNoPostType}
@@ -34,14 +37,14 @@ export const ScreenDataRenderer = ({
     )
   }
 
-  switch (postData.postType) {
+  switch (postedData.postType) {
     case "text-content":
-      return <ScreenContentTextComponent {...postData} />
+      return <ScreenContentTextComponent {...postedData} />
     case "image-link":
-      return <ScreenContentImageLinkComponent {...postData} />
+      return <ScreenContentImageLinkComponent {...postedData} />
     case "iframe-link":
-      return <ScreenContentIframeLinkComponent {...postData} />
+      return <ScreenContentIframeLinkComponent {...postedData} />
     default:
-      throw new Error(`Unknown post type: ${(postData as FzbPostData).postType}`);
+      throw new Error(`Unknown post type: ${(postedData as FzbPostData).postType}`);
   }
 }

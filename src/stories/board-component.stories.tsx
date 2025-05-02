@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { BoardComponent } from '~/components/board-component/board-component';
 import { createScreenIdForRowAndColumn } from '~/utils';
 import { FzbBoardId, FzbPostId } from '~/zod-types/branded-strings';
+import { BoardLocationSettingId } from '~/zod-types/screen-config/board-location-setting';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -52,6 +53,7 @@ export const SingleScreenNoPost: Story = {
     rowCount: 1,
     columnCount: 1,
     isFullscreen: false,
+    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [{ screenId: screen1Id, postData: null }],
     onRequestFullscreen: fn(),
   },
@@ -62,6 +64,7 @@ export const SingleScreenWithTextContentPost: Story = {
     rowCount: 1,
     columnCount: 1,
     isFullscreen: false,
+    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [{
       screenId: screen1Id,
       postData: {
@@ -80,6 +83,7 @@ export const MultiScreen2x2WithSomePosts: Story = {
     rowCount: 2,
     columnCount: 2,
     isFullscreen: false,
+    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [
       {
         screenId: screen1Id,
@@ -122,6 +126,7 @@ export const MismatchScreenAndIdsCount: Story = {
     rowCount: 7,
     columnCount: 10,
     isFullscreen: false,
+    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [],
     onRequestFullscreen: fn(),
   },

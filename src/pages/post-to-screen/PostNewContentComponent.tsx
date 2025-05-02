@@ -3,16 +3,19 @@ import { Accordion } from "@mui/material";
 import { VerticalSpacerDiv } from "~/components/common-divs";
 import { SelectedTypePostEditor } from "~/components/post-editors/selected-type-post-editor";
 import { PostTypeSelector } from "~/components/post-type-selector";
-import { FzbPostData } from "~/zod-types/posts/fzb-post";
+import { FzbPostData, FzbPostDataType } from "~/zod-types/posts/fzb-post";
+import { createDefaultPostDataForPostType } from "~/data/create-post-data";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 export const PostNewContentComponent = ({
+  allowedPostTypes,
   newPost,
   defaultExpanded,
   setNewPost,
   onSendPostToScreen,
 }: {
+  allowedPostTypes: FzbPostDataType[];
   newPost: FzbPostData;
   defaultExpanded: boolean;
   setNewPost: (postData: FzbPostData) => void;
@@ -33,8 +36,9 @@ export const PostNewContentComponent = ({
 
       <AccordionDetails>
         <PostTypeSelector
+          allowedPostTypes={allowedPostTypes}
           value={newPost.postType}
-          onChange={(postData) => setNewPost(postData)}
+          onChange={(postType) => setNewPost(createDefaultPostDataForPostType(postType))}
         />
         <VerticalSpacerDiv height={20} />
         <SelectedTypePostEditor

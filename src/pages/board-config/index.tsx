@@ -1,12 +1,20 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FzbBoardConfigSchema, FzbBoardGridDimensionsSchema } from "~/zod-types/screen-config";
+import { GRID_DIMENSION_OPTIONS, GridDimensionId } from "~/zod-types/screen-config/grid-dimensions";
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Typography } from "@mui/material";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
-import { createFizzBoardId, SERVER_URL } from "~/utils";
+import { createFizzBoardId } from "~/utils";
 import { z } from "zod";
+import { FzbBoardConfigSchema } from "~/zod-types/board-config";
+import { BOARD_LOCATION_SETTINGS, BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { createBoardUrl } from "~/url-utils";
+import { FzbBoardId } from "~/zod-types/branded-strings";
 
-type FormData = z.input<typeof FzbBoardConfigSchema>;
+
+type FormData = z.input<typeof FzbBoardConfigSchema> & {
+  gridDimensionsId: GridDimensionId;
+  boardLocationSettingId: BoardLocationSettingId;
+};
 
 export const DemoBoardLauncher = () => {
   const {
@@ -17,36 +25,56 @@ export const DemoBoardLauncher = () => {
   } = useForm<FormData>({
     resolver: zodResolver(FzbBoardConfigSchema),
     defaultValues: {
-      id: createFizzBoardId(),
+      boardId: createFizzBoardId(),
       name: "My Demo FizzBoard",
-      gridDimensions: "2x2",
+      gridDimensionsId: "2x1" as GridDimensionId,
+      boardLocationSettingId: "bls-library" as BoardLocationSettingId,
     },
   });
 
-  const gridDimensions = watch("gridDimensions");
-  
+  const boardId = watch("boardId");
+  const gridDimensionsId = watch("gridDimensionsId");
+  const boardLocationSettingId = watch("boardLocationSettingId");
+
+  const gridDimensionsOption = GRID_DIMENSION_OPTIONS.find(option => option.id === gridDimensionsId);
+  const boardLocationSettingOption = BOARD_LOCATION_SETTINGS.find(option => option.id === boardLocationSettingId);
+
+  if (!gridDimensionsOption || !boardLocationSettingOption) {
+    return null;
+  }
+
+  const { rowCount, columnCount } = gridDimensionsOption;
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
   };
 
-  const getPlural = (count: number, singular: string, plural: string) => {
-    return count === 1 ? singular : plural;
-  }
-
-  const [rowCount, columnCount] = gridDimensions.split("x").map(Number);
-
-  const launchBoardUrl = `${SERVER_URL}/boards/${watch("id")}?rows=${rowCount}&columns=${columnCount}`;
+  const launchBoardUrl = createBoardUrl(
+    boardId as FzbBoardId,
+    rowCount,
+    columnCount,
+    boardLocationSettingId
+  );
 
   const onLaunchClicked = () => {
     window.location.href = launchBoardUrl;
     console.log(launchBoardUrl);
   }
 
+  console.log("locationSetting", boardLocationSettingOption);
+
+  // const allGridDimensionOptions = getAllGridDimensionOptions();
+  // console.log("allGridDimensionOptions", allGridDimensionOptions);
+
   return (
     <FizzBoardAppFrame>
       <title>FizzBoard Demo - Configuration</title>
-      <Box sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
+      <Box sx={{ 
+        maxWidth: 600, 
+        minWidth: 400,
+        mx: "auto", 
+        p: 3 
+      }}>
         <Typography variant="h4" component="h1" gutterBottom>
           FizzBoard Launcher
         </Typography>
@@ -57,9 +85,9 @@ export const DemoBoardLauncher = () => {
             
             <TextField
               label="Board ID"
-              {...register("id")}
-              error={!!errors.id}
-              helperText={errors.id?.message}
+              {...register("boardId")}
+              error={!!errors.boardId}
+              helperText={errors.boardId?.message}
               disabled
             />
 
@@ -70,25 +98,72 @@ export const DemoBoardLauncher = () => {
               helperText={errors.name?.message}
             />
 
-            <FormControl fullWidth error={!!errors.gridDimensions}>
-              <InputLabel>Grid Dimensions</InputLabel>
+            <FormControl fullWidth error={!!errors.gridDimensionsId}>
+              <InputLabel>Board Setting</InputLabel>
+
               <Select
-                label="Grid Dimensions"
-                value={gridDimensions}
-                {...register("gridDimensions")}
+                label="Board Setting"
+                value={boardLocationSettingId}
+                onChange={(e) => {
+                  const selectedOptionId = e.target.value as BoardLocationSettingId;
+                  const selectedOption = BOARD_LOCATION_SETTINGS.find(option => option.id === selectedOptionId);
+                  if (selectedOption) {
+                    register("boardLocationSettingId").onChange({
+                      target: {
+                        value: selectedOptionId,
+                        name: "boardLocationSettingId"
+                      }
+                    });
+                  }
+                }}
               >
-                {FzbBoardGridDimensionsSchema.options.map((option) => {
-                  const [rows, cols] = option.value.split("x").map(Number);
+                {BOARD_LOCATION_SETTINGS.map((option) => {
                   return (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.value} [{rows * cols} {getPlural(rows * cols, "screen", "screens")}]
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.label}
                     </MenuItem>
                   )
                 })}
               </Select>
-              {errors.gridDimensions && (
+
+              {errors.gridDimensionsId && (
                 <Typography color="error" variant="caption">
-                  {errors.gridDimensions.message}
+                  {errors.gridDimensionsId.message}
+                </Typography>
+              )}
+            </FormControl>
+
+            <FormControl fullWidth error={!!errors.gridDimensionsId}>
+              <InputLabel>Grid Dimensions</InputLabel>
+
+              <Select
+                label="Grid Dimensions"
+                value={gridDimensionsId}
+                onChange={(e) => {
+                  const selectedOptionId = e.target.value as GridDimensionId;
+                  const selectedOption = GRID_DIMENSION_OPTIONS.find(option => option.id === selectedOptionId);
+                  if (selectedOption) {
+                    register("gridDimensionsId").onChange({
+                      target: {
+                        value: selectedOption.id,
+                        name: "gridDimensionsId"
+                      }
+                    });
+                  }
+                }}
+              >
+                {Object.values(GRID_DIMENSION_OPTIONS).map((option) => {
+                  return (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.label}
+                    </MenuItem>
+                  )
+                })}
+              </Select>
+
+              {errors.gridDimensionsId && (
+                <Typography color="error" variant="caption">
+                  {errors.gridDimensionsId.message}
                 </Typography>
               )}
             </FormControl>
@@ -98,9 +173,7 @@ export const DemoBoardLauncher = () => {
               variant="contained" 
               color="secondary" 
               fullWidth
-              onClick={() => {
-                onLaunchClicked();
-              }}
+              onClick={onLaunchClicked}
             >
               Launch
             </Button>

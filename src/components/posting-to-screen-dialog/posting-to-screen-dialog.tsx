@@ -19,19 +19,27 @@ export const PostingToScreenDialog = ({ screenId, postContentData, onPostingComp
 
   const [isPosting, setIsPosting] = useState(true);
 
-  const { setPostDataJsonForGridLocation } = useFizzBoardTbStoreData();
+  const { postToScreenApi } = useFizzBoardTbStoreData();
 
   const screenSlotId = getScreenSlotIdFromScreenId(screenId);
 
   useEffect(() => {
     if (isPosting) {
-      setPostDataJsonForGridLocation(screenSlotId, postContentData);
-      setTimeout(() => {
-        setIsPosting(false);
-        onPostingComplete();
-      }, 1000);
+      const postToScreen = async () => {
+        try {
+          await postToScreenApi.setPostDataJsonForGridLocation(screenSlotId, postContentData);
+          setIsPosting(false);
+          onPostingComplete();
+        } catch (error) {
+          console.error('Failed to post to screen:', error);
+          setIsPosting(false);
+          onPostingFailed();
+        }
+      };
+      
+      postToScreen();
     }
-  }, [isPosting, onPostingComplete, onPostingFailed, screenId, postContentData, screenSlotId, setPostDataJsonForGridLocation]);
+  }, [isPosting, onPostingComplete, onPostingFailed, screenId, postContentData, screenSlotId, postToScreenApi]);
 
   const postContentJson = JSON.stringify(postContentData, null, 2);
 

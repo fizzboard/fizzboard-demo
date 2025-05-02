@@ -1,8 +1,10 @@
 import { createNewPostId } from "~/utils";
 import { FzbIframeLinkPostData } from "~/zod-types/posts/fzb-iframe-link-post";
 import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
-import { FzbPostData, FzbPostType } from "~/zod-types/posts/fzb-post";
+import { FzbPostData, FzbPostDataType } from "~/zod-types/posts/fzb-post";
 import { FzbTextContentPostData } from "~/zod-types/posts/fzb-text-content-post";
+import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { getPostTypesForBoardLocationSetting } from "./posts-boards-utils";
 
 
 export const createDefaultTextPostData = (): FzbTextContentPostData => {
@@ -32,7 +34,7 @@ export const createDefaultIframePostData = (): FzbIframeLinkPostData => {
   };
 };
 
-export const createDefaultPostDataForPostType = (postType: FzbPostType): FzbPostData => {
+export const createDefaultPostDataForPostType = (postType: FzbPostDataType): FzbPostData => {
   switch (postType) {
     case "text-content":
       return createDefaultTextPostData();
@@ -43,4 +45,12 @@ export const createDefaultPostDataForPostType = (postType: FzbPostType): FzbPost
     default:
       throw new Error(`Unsupported post type: ${postType}`);
   }
+};
+
+
+export const createDefaultPostDataForBoardLocation = (boardLocationSettingId: BoardLocationSettingId): FzbPostData => {
+  const postTypes = getPostTypesForBoardLocationSetting(boardLocationSettingId);
+  const defaultPostType = postTypes[0];
+  const defaultPostData = createDefaultPostDataForPostType(defaultPostType);
+  return defaultPostData;
 };

@@ -5,13 +5,15 @@ import { createFizzBoardStore, createFizzBoardSynchronizer, createLocalFizzBoard
 import { FzbBoardId, FzbScreenId, FzbScreenSlotId } from "~/zod-types/branded-strings";
 import { FzbPostData, FzbPostDataSchema } from "~/zod-types/posts/fzb-post";
 import { createScreenId } from "~/utils";
+import { IPostToScreenApi } from "~/io-api/post-to-screen-api";
 
 
 export interface IFizzBoardTbStoreData {
   boardId: FzbBoardId;
   gridPostsData: Map<FzbScreenId, FzbPostData>;
 
-  setPostDataJsonForGridLocation: (gridLocation: FzbScreenSlotId, postData: FzbPostData) => void;
+  // setPostDataJsonForGridLocation: (gridLocation: FzbScreenSlotId, postData: FzbPostData) => void;
+  postToScreenApi: IPostToScreenApi;
 }
 
 const FizzBoardTbStoreContext = createContext<IFizzBoardTbStoreData | null>(null);
@@ -93,7 +95,7 @@ export const FizzBoardTbStoreBoardScreensProvider = ({
     store
   );
 
-  const setPostDataJsonForGridLocation = (gridLocation: FzbScreenSlotId, postData: FzbPostData) => {
+  const setPostDataJsonForGridLocation = async (gridLocation: FzbScreenSlotId, postData: FzbPostData) => {
     console.log("setPostDataJsonForGridLocation", gridLocation, postData);
     const postDataJson = JSON.stringify(postData);
 
@@ -134,7 +136,9 @@ export const FizzBoardTbStoreBoardScreensProvider = ({
   const value: IFizzBoardTbStoreData = {
     boardId: tbBoardStoreId,
     gridPostsData,
-    setPostDataJsonForGridLocation,
+    postToScreenApi: {
+      setPostDataJsonForGridLocation,
+    },
   };
   
 

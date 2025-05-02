@@ -1,8 +1,10 @@
 import { createContext, useContext } from "react";
 import { FzbPostData } from "../zod-types/posts/fzb-post";
-import { FzbBoardConfig } from "../zod-types/screen-config";
 import { createFizzBoardId } from "~/utils";
 import { FzbPostId } from "~/zod-types/branded-strings";
+import { FzbBoardConfig } from "~/zod-types/board-config";
+import { GridDimensionId } from "~/zod-types/screen-config/grid-dimensions";
+import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
 
 
 const myDemoPosts: FzbPostData[] = [
@@ -32,9 +34,10 @@ const initialFizzBoardAppData: FizzBoardAppDataContextType = {
   isDefault: true,
   myPosts: myDemoPosts,
   boardConfig: {
-    id: createFizzBoardId(),
+    boardId: createFizzBoardId(),
     name: "My First FizzBoard",
-    gridDimensions: "1x1",
+    gridDimensionsId: "2x2" as GridDimensionId,
+    boardLocationSettingId: "bls-library" as BoardLocationSettingId,
   },
 };
 

@@ -1,5 +1,5 @@
+import { FzbNoPostConfigType } from "~/zod-types/no-posts/fzb-no-post";
 import { Dimensions } from "../../ScreenContentComponent";
-import { FzbNoPostConfigType } from "../../../../zod-types/no-posts/fzb-no-post";
 import { InspirationalMessageComponent } from "./inspirational-message/inspirational-message-component";
 import { PutYourPostHereComponent } from "./put-your-post-here/put-your-post-here-component";
 import { NoPostReportingComponent } from "./reporting-component/no-post-reporting-component";
@@ -17,6 +17,8 @@ export const NoPostComponent = (props: NoPostComponentProps) => {
   const {
     noPostType,
   } = props;
+
+  // return null;
 
   switch (noPostType) {
     case "np-inspirational-message":
