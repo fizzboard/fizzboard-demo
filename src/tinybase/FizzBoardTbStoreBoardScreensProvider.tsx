@@ -96,7 +96,7 @@ export const FizzBoardTbStoreBoardScreensProvider = ({
   );
 
   const setPostDataJsonForGridLocation = async (gridLocation: FzbScreenSlotId, postData: FzbPostData) => {
-    console.log("setPostDataJsonForGridLocation", gridLocation, postData);
+    console.log("postToScreenApi::setPostDataJsonForGridLocation", tbBoardStoreId, gridLocation, postData);
     const postDataJson = JSON.stringify(postData);
 
     store.setCell(FIZZBOARD_SCREEN_GRID_TABLE, gridLocation, POST_DATA_JSON_COLUMN_KEY, postDataJson);

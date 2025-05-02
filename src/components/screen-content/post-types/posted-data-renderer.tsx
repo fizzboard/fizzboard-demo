@@ -5,6 +5,11 @@ import { ScreenContentIframeLinkComponent } from "./iframe-link/screen-content-i
 import { Dimensions } from "../ScreenContentComponent";
 import { ScreenContentImageLinkComponent } from "./image-link/screen-content-image-link-component";
 import { FzbNoPostConfigType } from "~/zod-types/no-posts/fzb-no-post";
+import { FzbTextContentPostData } from "~/zod-types/posts/fzb-text-content-post";
+import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
+import { FzbIframeLinkPostData } from "~/zod-types/posts/fzb-iframe-link-post";
+import { FzbUrlQrcodeWithCaptionPostData } from "~/zod-types/posts/fzb-url-qrcode-with-caption";
+import { ScreenContentUrlQrcodeWithCaptionComponent } from "./url-qrcode-with-caption/screen-content-url-qrcode-with-caption";
 
 
 interface ScreenDataRendererProps {
@@ -39,12 +44,14 @@ export const ScreenDataRenderer = (props: ScreenDataRendererProps) => {
 
   switch (postedData.postType) {
     case "text-content":
-      return <ScreenContentTextComponent {...postedData} />
+      return <ScreenContentTextComponent {...postedData as FzbTextContentPostData} />
     case "image-link":
-      return <ScreenContentImageLinkComponent {...postedData} />
+      return <ScreenContentImageLinkComponent {...postedData as FzbImageLinkPostData} />
     case "iframe-link":
-      return <ScreenContentIframeLinkComponent {...postedData} />
+      return <ScreenContentIframeLinkComponent {...postedData as FzbIframeLinkPostData} />
+    case "url-qrcode-with-caption":
+      return <ScreenContentUrlQrcodeWithCaptionComponent {...postedData as FzbUrlQrcodeWithCaptionPostData} />
     default:
-      throw new Error(`Unknown post type: ${(postedData as FzbPostData).postType}`);
+      throw new Error(`Unknown post type for rendering: ${(postedData as FzbPostData).postType}`);
   }
 }

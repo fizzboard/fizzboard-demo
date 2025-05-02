@@ -3,9 +3,10 @@ import { Accordion } from "@mui/material";
 import { VerticalSpacerDiv } from "~/components/common-divs";
 import { SelectedTypePostEditor } from "~/components/post-editors/selected-type-post-editor";
 import { PostTypeSelector } from "~/components/post-type-selector";
-import { FzbPostData, FzbPostDataType } from "~/zod-types/posts/fzb-post";
+import { FzbPostData } from "~/zod-types/posts/fzb-post";
 import { createDefaultPostDataForPostType } from "~/data/create-post-data";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { FzbPostDataType } from "~/zod-types/posts/fzb-basic-post";
 
 
 export const PostNewContentComponent = ({

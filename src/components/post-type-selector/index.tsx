@@ -1,5 +1,5 @@
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { FzbPostDataType } from '~/zod-types/posts/fzb-post';
+import { FzbPostDataType } from '~/zod-types/posts/fzb-basic-post';
 
 
 interface PostTypeSelectorProps {
@@ -18,11 +18,11 @@ export const PostTypeSelector = ({ value, onChange, allowedPostTypes }: PostType
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="post-type-select-label">Post Type</InputLabel>
+      <InputLabel id="post-type-select-label">Type of Post</InputLabel>
       <Select
         labelId="post-type-select-label"
         value={value}
-        label="Post Type"
+        label="Type of Post"
         onChange={(e) => handleChange(e.target.value as FzbPostDataType)}
       >
         {

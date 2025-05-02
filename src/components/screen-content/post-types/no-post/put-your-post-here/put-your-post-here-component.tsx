@@ -25,8 +25,6 @@ export const PutYourPostHereComponent = ({
       </div>
       <QRCodeSVG 
         value={sendPostToScreenUrl}
-        // size={100}
-        level="H"
       />
       {
         dimensions && (

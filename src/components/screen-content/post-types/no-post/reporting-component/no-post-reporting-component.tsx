@@ -35,7 +35,6 @@ export const NoPostReportingComponent = ({
       <QRCodeSVG 
         value={sendPostToScreenUrl}
         size={100}
-        level="H"
       />
       <Link 
         to={sendPostToScreenUrl}
