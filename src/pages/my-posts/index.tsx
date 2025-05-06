@@ -1,6 +1,5 @@
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
-import { useFizzBoardAppData } from "~/tinybase/tb-app";
 import { useState } from "react";
 import { AddTextContentPostDialog } from "~/components/posts/AddTextContentPostDialog";
 import { AddImageLinkPostDialog } from "~/components/AddImageLinkPostDialog";
@@ -9,6 +8,7 @@ import { FzbPostId, FzbScreenId } from "~/zod-types/branded-strings";
 import { QrCodeScanForScreenSlotDialog } from "~/components/qr-code/QrCodeScanForScreenSlotDialog";
 import { PostingToScreenDialog } from "~/components/posting-to-screen-dialog/posting-to-screen-dialog";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
+import { useDemoUserData } from "~/demo-content/demo-user-context";
 
 
 export const DemoMyPosts = () => {
@@ -20,8 +20,14 @@ export const DemoMyPosts = () => {
   const [isPostingData, setIsPostingData] = useState<FzbPostData | null>(null);
   const [screenId, setScreenId] = useState<FzbScreenId | null>(null);
   
-  const { myPosts } = useFizzBoardAppData();
-
+  // const { myPosts } = useFizzBoardAppData();
+  const { posts } = useDemoUserData();
+  const myPosts: FzbPostData[] = posts.map(post => ({
+    id: post.id as FzbPostId,
+    name: post.title,
+    postType: "text-content",
+    textContent: post.content,
+  }));
 
   const handleAddTextContentPost = (data: { name: string; textContent: string }) => {
     // TODO: Implement post creation

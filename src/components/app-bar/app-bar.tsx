@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { FzbMenuIcon } from "../../styling/icons";
+import { useDemoUserData } from "~/demo-content/demo-user-context";
 
 
 const APP_BAR_TEXT_ITEM_BACKGROUND_COLOR = "#F0F0F0";
@@ -30,6 +31,8 @@ export const FizzBoardAppBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const { profile } = useDemoUserData();
 
 
   const handleDrawerToggle = () => {
@@ -105,24 +108,43 @@ export const FizzBoardAppBar = () => {
             </Link>
           </div>
           <div style={{ flexGrow: 1 }} />
+          {profile.name}
           {!isMobile && (
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Link to={"/launch"} style={{
                 textDecoration: 'none',
               }}>
                 <Button color="inherit"
-                sx={{
-                  ...ButtonLinkStyle,
-                }}>Launch Board</Button>
+                  sx={{
+                    ...ButtonLinkStyle,
+                  }}>Launch Board</Button>
+              </Link>
+
+              <Link to={"/my-boards"} style={{
+                textDecoration: 'none',
+              }}>
+                <Button color="inherit"
+                  sx={{
+                    ...ButtonLinkStyle,
+                  }}>My Boards</Button>
               </Link>
 
               <Link to={"/my-posts"} style={{
                 textDecoration: 'none',
               }}>
                 <Button color="inherit"
-                sx={{
-                  ...ButtonLinkStyle,
-                }}>My Posts</Button>
+                  sx={{
+                    ...ButtonLinkStyle,
+                  }}>My Posts</Button>
+              </Link>
+
+              <Link to={"/choose-profile"} style={{
+                textDecoration: 'none',
+              }}>
+                <Button color="inherit"
+                  sx={{
+                    ...ButtonLinkStyle,
+                  }}>Change Profile</Button>
               </Link>
 
               <HorizontalSpacerDiv width={5} />

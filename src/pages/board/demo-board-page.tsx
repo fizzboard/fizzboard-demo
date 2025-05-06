@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { FizzBoardAppFrame } from '~/components/app-frame/app-frame';
 import { FzbBoardId } from '~/zod-types/branded-strings';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Inspector } from "tinybase/ui-react-inspector"
 import { FizzBoardTbStoreBoardScreensProvider } from '~/tinybase/FizzBoardTbStoreBoardScreensProvider';
 import { BoardComponentWrapper } from '~/components/board-component/board-component-wrapper';
-import { BoardLocationSettingId } from '~/zod-types/screen-config/board-location-setting';
+import { BoardLocationSettingId } from '~/zod-types/board-config/board-location-setting';
+import { FizzBoardAppBar } from '~/components/app-bar/app-bar';
+import { Box } from '@mui/material';
+import { APP_BAR_HEIGHT } from '~/components/app-bar/app-bar';
+import { FullScreenContainer } from './full-screen-container';
 
 
 export const DemoBoardPage = () => {
@@ -46,15 +49,7 @@ export const DemoBoardPage = () => {
     <FizzBoardTbStoreBoardScreensProvider tbBoardStoreId={boardId}>
       {
         isFullscreen ? (
-          <BoardComponentWrapper
-            rowCount={rowCount}
-            columnCount={columnCount}
-            boardLocationSettingId={boardLocationSettingId}
-            isFullscreen={isFullscreen}
-            onRequestFullscreen={onRequestFullscreen}
-          />
-        ) : (
-          <FizzBoardAppFrame>
+          <FullScreenContainer>
             <BoardComponentWrapper
               rowCount={rowCount}
               columnCount={columnCount}
@@ -62,8 +57,28 @@ export const DemoBoardPage = () => {
               isFullscreen={isFullscreen}
               onRequestFullscreen={onRequestFullscreen}
             />
-          <Inspector />
-        </FizzBoardAppFrame>
+          </FullScreenContainer>
+        ) : (
+          <>
+            <FizzBoardAppBar />
+            <Box 
+              sx={{
+                width: '100vw',
+                paddingTop: `${APP_BAR_HEIGHT}`,
+                height: `calc(100vh - ${APP_BAR_HEIGHT})`,
+                overflow: 'hidden',
+              }}
+            >
+              <BoardComponentWrapper
+                rowCount={rowCount}
+                columnCount={columnCount}
+                boardLocationSettingId={boardLocationSettingId}
+                isFullscreen={isFullscreen}
+                onRequestFullscreen={onRequestFullscreen}
+              />
+            <Inspector />
+          </Box>
+        </>
         )
       }        
     </FizzBoardTbStoreBoardScreensProvider>

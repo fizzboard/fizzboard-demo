@@ -5,15 +5,23 @@ import { MemoryRouter } from 'react-router-dom';
 import { BoardComponent } from '~/components/board-component/board-component';
 import { createScreenIdForRowAndColumn } from '~/utils';
 import { FzbBoardId, FzbPostId } from '~/zod-types/branded-strings';
-import { BoardLocationSettingId } from '~/zod-types/screen-config/board-location-setting';
+import { BoardLocationSettingId } from '~/zod-types/board-config/board-location-setting';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: 'FizzBoard/BoardComponent',
   component: BoardComponent,
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: 'centered',
+    // layout: 'fullscreen',
+    previewTabs: {
+      canvas: { hidden: true },
+      'storybook/docs/panel': { hidden: true },
+      'storybook/actions/panel': { hidden: true },
+    },
+    viewMode: 'story',
+    options: {
+      showToolbar: false,
+    },
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
@@ -71,7 +79,7 @@ export const SingleScreenWithTextContentPost: Story = {
         postType: 'text-content',
         id: post1Id,
         name: 'Test Post',
-        textContent: 'This is a test post',
+        textContent: 'This is a 1x1 test post',
       }
     }],
     onRequestFullscreen: fn(),
@@ -91,7 +99,7 @@ export const MultiScreen2x2WithSomePosts: Story = {
           postType: 'text-content',
           id: post1Id,
           name: 'Test Post',
-          textContent: 'This is a test post',
+          textContent: 'This is a 2x2 test post',
         }
       },
       {
@@ -113,7 +121,7 @@ export const MultiScreen2x2WithSomePosts: Story = {
           postType: 'iframe-link',
           id: post4Id,
           name: 'Test Post 4',
-          iframeUrl: 'https://www.google.com',
+          iframeUrl: 'https://fizzboard.github.io/fizzboard-demo/',
         }
       }
     ],

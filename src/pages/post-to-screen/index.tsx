@@ -12,7 +12,7 @@ import { getBoardIdFromScreenId } from "~/utils";
 import { PostNewContentComponent } from "./PostNewContentComponent";
 import { PostExistingContentComponent } from "./PostExistingContentComponent";
 import { BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID } from "~/url-utils";
-import { BoardLocationSettingIdsEnum, BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { BoardLocationSettingIdsEnum, BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 import { createDefaultPostDataForBoardLocation } from "~/data/create-post-data";
 import { filterPostsForBoardLocationSettingId, getPostTypesForBoardLocationSetting } from "~/data/posts-boards-utils";
 

@@ -3,7 +3,7 @@ import { useFizzBoardTbStoreData } from "~/tinybase/FizzBoardTbStoreBoardScreens
 import { createScreenIdForRowAndColumn } from "~/utils";
 import { BoardComponent } from "./board-component";
 import { ScreenPost } from "~/zod-types/screen-post";
-import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 
 
 interface BoardComponentWrapperProps {

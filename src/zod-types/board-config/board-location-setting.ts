@@ -37,6 +37,9 @@ export const BOARD_LOCATION_SETTINGS: BoardLocationSettingOption[] = [
   { id: "bls-corporate-environment-formal" as BoardLocationSettingId, label: "Corporate Environment - Formal" },
   { id: "bls-corporate-environment-casual" as BoardLocationSettingId, label: "Corporate Environment - Casual" },
   { id: "bls-home" as BoardLocationSettingId, label: "Home" },
+
+  { id: "bls-tcg-trade-event" as BoardLocationSettingId, label: "TCG Trade Event" },
+
   { id: "bls-other" as BoardLocationSettingId, label: "Other" },
   { id: "bls-only-images" as BoardLocationSettingId, label: "Only Images" },
   { id: "bls-only-text" as BoardLocationSettingId, label: "Only Text" },

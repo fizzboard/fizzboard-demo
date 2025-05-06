@@ -2,10 +2,10 @@ import { createContext, useContext } from "react";
 import { FzbPostData } from "../zod-types/posts/fzb-post";
 import { createFizzBoardId } from "~/utils";
 import { FzbPostId } from "~/zod-types/branded-strings";
-import { FzbBoardConfig } from "~/zod-types/board-config";
-import { GridDimensionId } from "~/zod-types/screen-config/grid-dimensions";
-import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
-
+import { FzbBoardConfig } from "~/zod-types/board-config/board-config";
+import { GridDimensionId } from "~/zod-types/board-config/grid-dimensions";
+import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
+import _ from "lodash";
 
 const myDemoPosts: FzbPostData[] = [
   {
@@ -38,6 +38,18 @@ const initialFizzBoardAppData: FizzBoardAppDataContextType = {
     name: "My First FizzBoard",
     gridDimensionsId: "2x2" as GridDimensionId,
     boardLocationSettingId: "bls-library" as BoardLocationSettingId,
+    allScreenSettings: _.range(0, 4).map(_ => ({
+      screenType: "show-permanent-blank",
+    })),
+    // allScreenSettings: [
+    //   {
+    //     screenType: "show-permanent-blank",
+    //   },
+    //   {
+    //     screenType: "show-pe",
+    //     imageUrl: "https://georgekarbusphotography.com/wp-content/uploads/2018/04/best_orca_killer_whale_underwater_photos.jpg",
+    //   },
+    // ],
   },
 };
 

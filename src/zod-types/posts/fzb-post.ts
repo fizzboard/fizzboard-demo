@@ -10,6 +10,9 @@ export const FzbPostDataSchema = z.discriminatedUnion("postType", [
   FzbTextContentPostDataSchema,
   FzbIframeLinkPostDataSchema,
   FzbUrlQrcodeWithCaptionPostDataSchema,
+  // embedded video post
+  // PDF view post
+  // 
 ]);
 
 export type FzbPostData = z.infer<typeof FzbPostDataSchema>;

@@ -1,5 +1,5 @@
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
-import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 import { FzbPostDataType } from "~/zod-types/posts/fzb-basic-post";
 
 
@@ -11,6 +11,8 @@ export const getPostTypesForBoardLocationSetting = (boardLocationSettingId: Boar
       return ["text-content" as FzbPostDataType];
     case "bls-only-iframes":
       return ["iframe-link" as FzbPostDataType];
+    case "bls-tcg-trade-event":
+      return ["url-qrcode-with-caption" as FzbPostDataType];
   }
 
   // return FzbPostDataTypeValues.options.map((option) => option.shape.postType.value);

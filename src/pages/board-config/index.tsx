@@ -1,12 +1,12 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GRID_DIMENSION_OPTIONS, GridDimensionId } from "~/zod-types/screen-config/grid-dimensions";
+import { GRID_DIMENSION_OPTIONS, GridDimensionId } from "~/zod-types/board-config/grid-dimensions";
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Typography } from "@mui/material";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
 import { createFizzBoardId } from "~/utils";
 import { z } from "zod";
-import { FzbBoardConfigSchema } from "~/zod-types/board-config";
-import { BOARD_LOCATION_SETTINGS, BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { FzbBoardConfigSchema } from "~/zod-types/board-config/board-config";
+import { BOARD_LOCATION_SETTINGS, BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 import { createBoardUrl } from "~/url-utils";
 import { FzbBoardId } from "~/zod-types/branded-strings";
 
@@ -62,9 +62,6 @@ export const DemoBoardLauncher = () => {
   }
 
   console.log("locationSetting", boardLocationSettingOption);
-
-  // const allGridDimensionOptions = getAllGridDimensionOptions();
-  // console.log("allGridDimensionOptions", allGridDimensionOptions);
 
   return (
     <FizzBoardAppFrame>

@@ -1,12 +1,11 @@
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/material";
-import { APP_BAR_HEIGHT } from "../app-bar/app-bar";
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { getGridCoordinate } from "~/utils";
 import { ScreenContentComponent } from "../screen-content/ScreenContentComponent";
 import { ScreenPost } from "~/zod-types/screen-post";
 import { createSendPostToScreenUrl } from "~/url-utils";
-import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 
 
 interface BoardComponentProps {
@@ -38,21 +37,20 @@ export const BoardComponent = ({
     throw new Error(`Expected ${expectedScreenCount} screens, but got ${screenPosts.length}`);
   }
 
-  const boardHeight = isFullscreen ? '100vh' : `calc(100vh - ${APP_BAR_HEIGHT})`;
-  
   return (
     <>
       <title>FizzBoard Demo - Board</title>
       <Box
         sx={{
-        width: '100vw',
-        height: boardHeight,
+        width: '100%',
+        height: '100%',
         display: 'grid',
         gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
         gridTemplateRows: `repeat(${rowCount}, 1fr)`,
         boxSizing: 'border-box',
         backgroundColor: 'background.default',
         position: 'relative',
+        overflow: 'hidden',
       }}
       >
         {showGoFullscreenButton && (

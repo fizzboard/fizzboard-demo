@@ -1,7 +1,7 @@
 import { SERVER_URL } from "./utils";
 import { joinPaths } from "./utils";
 import { FzbBoardId, FzbScreenId } from "./zod-types/branded-strings";
-import { BoardLocationSettingId } from "./zod-types/screen-config/board-location-setting";
+import { BoardLocationSettingId } from "./zod-types/board-config/board-location-setting";
 
 
 export const BOARD_URL_PARAMS_ROW_COUNT = "rows";

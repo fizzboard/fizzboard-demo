@@ -3,7 +3,7 @@ import { FzbIframeLinkPostData, FzbIframeLinkPostDataSchema } from "~/zod-types/
 import { FzbImageLinkPostData, FzbImageLinkPostDataSchema } from "~/zod-types/posts/fzb-image-link-post";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
 import { FzbTextContentPostData, FzbTextContentPostDataSchema } from "~/zod-types/posts/fzb-text-content-post";
-import { BoardLocationSettingId } from "~/zod-types/screen-config/board-location-setting";
+import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 import { getPostTypesForBoardLocationSetting } from "./posts-boards-utils";
 import { FzbPostDataType } from "~/zod-types/posts/fzb-basic-post";
 import { FzbUrlQrcodeWithCaptionPostData } from "~/zod-types/posts/fzb-url-qrcode-with-caption";
