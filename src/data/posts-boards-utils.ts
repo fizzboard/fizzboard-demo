@@ -15,12 +15,6 @@ export const getPostTypesForBoardLocationSetting = (boardLocationSettingId: Boar
       return ["url-qrcode-with-caption" as FzbPostDataType];
   }
 
-  // return FzbPostDataTypeValues.options.map((option) => option.shape.postType.value);
-  // const defaultPostTypes = FzbPostDataTypeUnion.options
-  //   .map((option) => (option as { value: string }).value);
-
-  // return FzbPostDataTypeValues.map(lit => (lit as ZodLiteral<string>).value);
-
   return [
     "text-content" as FzbPostDataType,
     "image-link" as FzbPostDataType,
