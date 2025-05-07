@@ -1,9 +1,9 @@
-import { Box, Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
+import { Box, Button, IconButton, Drawer, List, ListItem, ListItemText, Avatar } from "@mui/material";
 import { Toolbar } from "@mui/material";
 import { AppBar } from "@mui/material";
 import { Link } from 'react-router';
 import { HorizontalCenteredFlexContainerDiv, HorizontalSpacerDiv } from "../common-divs";
-import logoUrl from "../../assets/fizzboard-logo.svg";
+import logoUrl from "../../logo/fizzboard-logo.svg";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -108,9 +108,10 @@ export const FizzBoardAppBar = () => {
             </Link>
           </div>
           <div style={{ flexGrow: 1 }} />
-          {profile.name}
+
           {!isMobile && (
             <Box sx={{ display: 'flex', gap: 2 }}>
+{/*               
               <Link to={"/launch"} style={{
                 textDecoration: 'none',
               }}>
@@ -118,7 +119,7 @@ export const FizzBoardAppBar = () => {
                   sx={{
                     ...ButtonLinkStyle,
                   }}>Launch Board</Button>
-              </Link>
+              </Link> */}
 
               <Link to={"/my-boards"} style={{
                 textDecoration: 'none',
@@ -138,13 +139,21 @@ export const FizzBoardAppBar = () => {
                   }}>My Posts</Button>
               </Link>
 
+              {profile.name}
+
               <Link to={"/choose-profile"} style={{
                 textDecoration: 'none',
               }}>
-                <Button color="inherit"
+                <IconButton
                   sx={{
                     ...ButtonLinkStyle,
-                  }}>Change Profile</Button>
+                    padding: '3px',
+                    height: '36px',
+                    width: '36px',
+                  }}
+                >
+                  <Avatar sx={{ width: 30, height: 30 }} />
+                </IconButton>
               </Link>
 
               <HorizontalSpacerDiv width={5} />

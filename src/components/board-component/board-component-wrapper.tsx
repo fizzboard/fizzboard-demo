@@ -3,13 +3,14 @@ import { useFizzBoardTbStoreData } from "~/tinybase/FizzBoardTbStoreBoardScreens
 import { createScreenIdForRowAndColumn } from "~/utils";
 import { BoardComponent } from "./board-component";
 import { ScreenPost } from "~/zod-types/screen-post";
-import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
-
+import { FzbScreenConfigData } from "~/zod-types/screen-config/fzb-screen-config";
 
 interface BoardComponentWrapperProps {
   rowCount: number;
   columnCount: number;
-  boardLocationSettingId: BoardLocationSettingId,
+  // boardLocationSettingId: BoardLocationSettingId,
+
+  allScreenSettings: FzbScreenConfigData[],
 
   isFullscreen: boolean;
   onRequestFullscreen: () => void;
@@ -18,7 +19,8 @@ interface BoardComponentWrapperProps {
 export const BoardComponentWrapper = ({ 
   rowCount, 
   columnCount,
-  boardLocationSettingId,
+  // boardLocationSettingId,
+  allScreenSettings,
   isFullscreen,
   onRequestFullscreen,
 }: BoardComponentWrapperProps) => {
@@ -45,7 +47,8 @@ export const BoardComponentWrapper = ({
     <BoardComponent
       rowCount={rowCount}
       columnCount={columnCount}
-      boardLocationSettingId={boardLocationSettingId}
+      // boardLocationSettingId={boardLocationSettingId}
+      allScreenSettings={allScreenSettings}
       isFullscreen={isFullscreen}
       onRequestFullscreen={onRequestFullscreen}
       screenPosts={screenPosts}

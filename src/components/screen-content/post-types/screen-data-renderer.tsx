@@ -1,19 +1,20 @@
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
-import { NoPostComponent } from "./no-post/no-post-component"
 import { ScreenContentTextComponent } from "./text-content/screen-content-text-component";
 import { ScreenContentIframeLinkComponent } from "./iframe-link/screen-content-iframe-link-component";
 import { Dimensions } from "../ScreenContentComponent";
 import { ScreenContentImageLinkComponent } from "./image-link/screen-content-image-link-component";
-import { FzbNoPostConfigType } from "~/zod-types/no-posts/fzb-no-post";
 import { FzbTextContentPostData } from "~/zod-types/posts/fzb-text-content-post";
 import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
 import { FzbIframeLinkPostData } from "~/zod-types/posts/fzb-iframe-link-post";
 import { FzbUrlQrcodeWithCaptionPostData } from "~/zod-types/posts/fzb-url-qrcode-with-caption";
 import { ScreenContentUrlQrcodeWithCaptionComponent } from "./url-qrcode-with-caption/screen-content-url-qrcode-with-caption";
+import { InvitationToPostToScreenComponent } from "../sc-poster-invitation/sc-poster-placed-screen-image/invitation-to-post-to-screen-component";
+import { FzbScreenConfigPosterPlacedScreenImageData } from "~/zod-types/screen-config/fzb-poster-placed-screen-image";
 
 
 interface ScreenDataRendererProps {
   postedData: FzbPostData | null;
+  screenConfig: FzbScreenConfigPosterPlacedScreenImageData;
   
   dimensions: Dimensions | null;
   sendPostToScreenUrl: string;
@@ -26,20 +27,31 @@ export const ScreenDataRenderer = (props: ScreenDataRendererProps) => {
     postedData,
     dimensions,
     sendPostToScreenUrl,
-    gridCoordinate,
+    // gridCoordinate,
+    screenConfig,
   } = props;
 
-  if (!postedData) {
-    const defaultNoPostType: FzbNoPostConfigType = "np-put-your-post-here";
+  
 
-    return (
-      <NoPostComponent
-        noPostType={defaultNoPostType}
-        dimensions={dimensions}
-        sendPostToScreenUrl={sendPostToScreenUrl}
-        gridCoordinate={gridCoordinate}
-      />
-    )
+  // if (!postedData) {
+  //   const defaultNoPostType: FzbNoPostConfigType = "np-put-your-post-here";
+
+  //   return (
+  //     <NoPostComponent
+  //       noPostType={defaultNoPostType}
+  //       dimensions={dimensions}
+  //       sendPostToScreenUrl={sendPostToScreenUrl}
+  //       gridCoordinate={gridCoordinate}
+  //     />
+  //   )
+  // }
+
+  if (!postedData) {
+    return <InvitationToPostToScreenComponent 
+      dimensions={dimensions}
+      screenConfig={screenConfig}
+      sendPostToScreenUrl={sendPostToScreenUrl}
+    />
   }
 
   switch (postedData.postType) {

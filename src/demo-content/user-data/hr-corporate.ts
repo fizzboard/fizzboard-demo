@@ -5,6 +5,8 @@ import { DemoBoardConfigData, DemoBoardConfigId } from "~/zod-types/demo-users/d
 import { UserBoard } from "~/zod-types/demo-users/user-board";
 import { mapDemoBoardConfigToUserBoard } from "./utils";
 import _ from "lodash";
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK } from "~/zod-types/screen-config/fzb-show-permanent-blank";
+
 
 const hrCorporateDemoBoardConfigs: DemoBoardConfigData[] = [
   {
@@ -14,7 +16,7 @@ const hrCorporateDemoBoardConfigs: DemoBoardConfigData[] = [
     gridDimensionsId: "2x1" as GridDimensionId,
     boardLocationSettingId: "bls-corporate-environment-formal" as BoardLocationSettingId,
     allScreenSettings: _.range(0, 2).map(_ => ({
-      screenType: "show-permanent-blank",
+      screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK,
     })),
   },
   {
@@ -24,7 +26,7 @@ const hrCorporateDemoBoardConfigs: DemoBoardConfigData[] = [
     gridDimensionsId: "2x1" as GridDimensionId,
     boardLocationSettingId: "bls-corporate-environment-informal" as BoardLocationSettingId,
     allScreenSettings: _.range(0, 2).map(_ => ({
-      screenType: "show-permanent-blank",
+      screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK,
     })),
   },
 ]

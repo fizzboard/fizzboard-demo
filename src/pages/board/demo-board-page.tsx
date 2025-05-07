@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { FzbBoardId } from '~/zod-types/branded-strings';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Inspector } from "tinybase/ui-react-inspector"
 import { FizzBoardTbStoreBoardScreensProvider } from '~/tinybase/FizzBoardTbStoreBoardScreensProvider';
 import { BoardComponentWrapper } from '~/components/board-component/board-component-wrapper';
-import { BoardLocationSettingId } from '~/zod-types/board-config/board-location-setting';
 import { FizzBoardAppBar } from '~/components/app-bar/app-bar';
 import { Box } from '@mui/material';
 import { APP_BAR_HEIGHT } from '~/components/app-bar/app-bar';
 import { FullScreenContainer } from './full-screen-container';
+import { useDemoUserData } from '~/demo-content/demo-user-context';
+import { GRID_DIMENSION_OPTIONS } from '~/zod-types/board-config/grid-dimensions';
 
 
 export const DemoBoardPage = () => {
@@ -16,17 +17,8 @@ export const DemoBoardPage = () => {
   const { id } = useParams();
   const boardId = id as FzbBoardId;
 
-  const [searchParams] = useSearchParams();
-  const rows = searchParams.get('rows') ?? 1;
-  const columns = searchParams.get('columns') ?? 1;
-
-  const rowCount = Number(rows);
-  const columnCount = Number(columns);
-
-  const boardLocationSettingId = (searchParams.get('setting') ?? "bls-other") as BoardLocationSettingId;
-
+  const { boards } = useDemoUserData();
   const [isFullscreen, setIsFullscreen] = useState(false);
-  
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -39,6 +31,22 @@ export const DemoBoardPage = () => {
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
   }, []);
+
+
+  const board = boards.find(b => b.id === boardId);
+
+  if (!board) {
+    return <div>Demo Board not found</div>;
+  }
+
+  const { gridDimensionsId, allScreenSettings } = board;
+  const gridDimensionsOption = GRID_DIMENSION_OPTIONS.find(option => option.id === gridDimensionsId);
+  
+  if (!gridDimensionsOption) {
+    return <div>Grid dimensions not found</div>;
+  }
+  const { rowCount, columnCount } = gridDimensionsOption;
+
 
   const onRequestFullscreen = () => {
     document.documentElement.requestFullscreen();
@@ -53,7 +61,8 @@ export const DemoBoardPage = () => {
             <BoardComponentWrapper
               rowCount={rowCount}
               columnCount={columnCount}
-              boardLocationSettingId={boardLocationSettingId}
+              // boardLocationSettingId={boardLocationSettingId}
+              allScreenSettings={allScreenSettings}
               isFullscreen={isFullscreen}
               onRequestFullscreen={onRequestFullscreen}
             />
@@ -72,7 +81,8 @@ export const DemoBoardPage = () => {
               <BoardComponentWrapper
                 rowCount={rowCount}
                 columnCount={columnCount}
-                boardLocationSettingId={boardLocationSettingId}
+                // boardLocationSettingId={boardLocationSettingId}
+                allScreenSettings={allScreenSettings}
                 isFullscreen={isFullscreen}
                 onRequestFullscreen={onRequestFullscreen}
               />

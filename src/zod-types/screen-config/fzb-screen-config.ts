@@ -1,17 +1,19 @@
 import z from "zod";
-import { FzbScreenConfigPermanentImageDataSchema } from "./fzb-show-permanent-image";
+import { FzbScreenConfigShowPermanentImageDataSchema } from "./fzb-show-permanent-image";
+import { FzbScreenConfigPosterPlacedScreenImageDataSchema } from "./fzb-poster-placed-screen-image";
 import { FzbScreenConfigShowImageFromBoardImagePoolDataSchema } from "./fzb-show-image-from-board-image-pool";
 import { FzbScreenConfigPosterInvitationAddImageToBoardImagePoolDataSchema } from "./fzb-poster-invitation-add-image-to-board-image-pool";
-import { FzbScreenConfigPosterInvitationPlaceImageOnScreenDataSchema } from "./fzb-poster-invitation-place-image-on-screen";
 import { FzbScreenConfigShowPermanentBlankDataSchema } from "./fzb-show-permanent-blank";
 
 
 export const FzbScreenConfigDataSchema = z.discriminatedUnion("screenType", [
-  FzbScreenConfigPermanentImageDataSchema,
+  FzbScreenConfigShowPermanentBlankDataSchema,
+  FzbScreenConfigShowPermanentImageDataSchema,
+  
+  FzbScreenConfigPosterPlacedScreenImageDataSchema,
+
   FzbScreenConfigShowImageFromBoardImagePoolDataSchema,
   FzbScreenConfigPosterInvitationAddImageToBoardImagePoolDataSchema,
-  FzbScreenConfigPosterInvitationPlaceImageOnScreenDataSchema,
-  FzbScreenConfigShowPermanentBlankDataSchema,
 ]);
 
 

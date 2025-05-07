@@ -3,7 +3,7 @@ import { FzbScreenConfigTypeSchema } from "../branded-strings";
 import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK } from "./fzb-show-permanent-image";
 import { SCREEN_CONFIG_TYPE_SHOW_IMAGE_FROM_BOARD_IMAGE_POOL } from "./fzb-show-image-from-board-image-pool";
 import { SCREEN_CONFIG_TYPE_POSTER_INVITATION_ADD_IMAGE_TO_BOARD_IMAGE_POOL } from "./fzb-poster-invitation-add-image-to-board-image-pool";
-import { SCREEN_CONFIG_TYPE_POSTER_INVITATION_PLACE_IMAGE_ON_SCREEN } from "./fzb-poster-invitation-place-image-on-screen";
+import { SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE } from "./fzb-poster-placed-screen-image";
 
 
 export const FzbScreenConfigDataTypeBrandKey = 'FzbScreenConfigDataType';
@@ -13,7 +13,7 @@ export const FzbScreenConfigDataTypeValues = [
   z.literal(SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK),
   z.literal(SCREEN_CONFIG_TYPE_SHOW_IMAGE_FROM_BOARD_IMAGE_POOL),
   z.literal(SCREEN_CONFIG_TYPE_POSTER_INVITATION_ADD_IMAGE_TO_BOARD_IMAGE_POOL),
-  z.literal(SCREEN_CONFIG_TYPE_POSTER_INVITATION_PLACE_IMAGE_ON_SCREEN),
+  z.literal(SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE),
 ] as const;
 
 export type FzbScreenConfigDataTypeValues = typeof FzbScreenConfigDataTypeValues[number];

@@ -5,12 +5,11 @@ import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { DefaultAppContainer } from "~/components/app-container/default-app-container";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
 import { useDemoUserData } from "~/demo-content/demo-user-context";
-import { createBoardUrl } from "~/url-utils";
 import { GridDimensionId } from "~/zod-types/board-config/grid-dimensions";
 import { BOARD_LOCATION_SETTINGS, BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 import { GRID_DIMENSION_OPTIONS } from "~/zod-types/board-config/grid-dimensions";
@@ -21,6 +20,8 @@ import { FzbBoardConfigSchema } from "~/zod-types/board-config/board-config";
 import { GridSettingsDialog } from "~/components/grid-settings-dialog/GridSettingsDialog";
 import { useState } from "react";
 import { FzbScreenConfigData } from "~/zod-types/screen-config/fzb-screen-config";
+import { UserBoard } from "~/zod-types/demo-users/user-board";
+import { createShowBoardUrl } from "~/url-utils";
 
 
 type FormData = z.input<typeof FzbBoardConfigSchema> & {
@@ -34,19 +35,20 @@ export const DemoMyBoardConfigPage = () => {
   const boardId = id as FzbBoardId;
   const [isGridSettingsDialogOpen, setIsGridSettingsDialogOpen] = useState(false);
 
-  const { boards } = useDemoUserData();
+  const userDataContext = useDemoUserData();
+  const { boards, setUserData } = userDataContext;
   const board = boards.find(b => b.id === boardId);
 
   const [allScreenSettings, setAllScreenSettings] = useState(board?.allScreenSettings);
 
-  console.log("boards", boards);
-  console.log("board", board);
-  console.log("board.allScreenSettings:", board?.allScreenSettings);
-  console.log("isGridSettingsDialogOpen:", isGridSettingsDialogOpen);
+  // console.log("boards", boards);
+  // console.log("board", board);
+  // console.log("board.allScreenSettings:", board?.allScreenSettings);
+  // console.log("isGridSettingsDialogOpen:", isGridSettingsDialogOpen);
 
   const {
     register,
-    handleSubmit,
+    // handleSubmit,
     watch,
     formState: { errors },
   } = useForm<FormData>({
@@ -65,6 +67,7 @@ export const DemoMyBoardConfigPage = () => {
 
 
   // const boardId = watch("boardId");
+  const name = watch("name");
   const gridDimensionsId = watch("gridDimensionsId");
   const boardLocationSettingId = watch("boardLocationSettingId");
   
@@ -77,22 +80,45 @@ export const DemoMyBoardConfigPage = () => {
 
   const { rowCount, columnCount } = gridDimensionsOption;
 
-
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-  };
-
-  const launchBoardUrl = createBoardUrl(
+  const launchBoardUrl = createShowBoardUrl(
     boardId as FzbBoardId,
     rowCount,
     columnCount,
     boardLocationSettingId
   );
 
-  const onLaunchClicked = () => {
-    window.location.href = launchBoardUrl;
-    console.log(launchBoardUrl);
+  const doSaveBoard = () => {
+    const currentConfig: UserBoard = {
+      ...board,
+      name,
+      gridDimensionsId,
+      boardLocationSettingId,
+      allScreenSettings,
+    }
+
+    console.log("doSaveBoard - currentConfig", currentConfig);
+
+    setUserData({
+      ...userDataContext,
+      boards: boards.map(b => b.id === boardId ? currentConfig : b),
+    });
+
   }
+
+
+  const onLaunchClicked = () => {
+    console.log("launchBoardUrl", launchBoardUrl);
+
+    doSaveBoard();
+    window.location.href = launchBoardUrl;
+  }
+
+
+
+  // const onSubmit: SubmitHandler<FormData> = (data) => {
+  //   console.log("onSubmit", data);
+  //   // onLaunchClicked();
+  // };
 
   const handleAllScreenSettingsChange = (newAllScreenSettings: FzbScreenConfigData[]) => {
     setAllScreenSettings(newAllScreenSettings);
@@ -102,10 +128,10 @@ export const DemoMyBoardConfigPage = () => {
     <FizzBoardAppFrame>
       <DefaultAppContainer>
         <Typography variant="h4" component="h1" gutterBottom>
-          FizzBoard Launcher
+          FizzBoard Config & Launcher
         </Typography>
         <form 
-          onSubmit={handleSubmit(onSubmit)}
+          // onSubmit={handleSubmit(onSubmit)}
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             
@@ -122,12 +148,14 @@ export const DemoMyBoardConfigPage = () => {
               {...register("name")}
               error={!!errors.name}
               helperText={errors.name?.message}
+              disabled
             />
 
             <FormControl fullWidth error={!!errors.gridDimensionsId}>
               <InputLabel>Board Setting</InputLabel>
 
               <Select
+                disabled
                 label="Board Setting"
                 value={boardLocationSettingId}
                 onChange={(e) => {
@@ -163,6 +191,7 @@ export const DemoMyBoardConfigPage = () => {
               <InputLabel>Grid Dimensions</InputLabel>
 
               <Select
+                disabled
                 label="Grid Dimensions"
                 value={gridDimensionsId}
                 onChange={(e) => {
@@ -209,10 +238,21 @@ export const DemoMyBoardConfigPage = () => {
 
             <Button 
               type="button" 
+              variant="outlined" 
+              color="primary" 
+              fullWidth
+              onClick={doSaveBoard}
+            >
+              Save
+            </Button>
+
+            <Button 
+              type="button" 
               variant="contained" 
               color="secondary" 
               fullWidth
               onClick={onLaunchClicked}
+              // type="submit"
             >
               Launch
             </Button>

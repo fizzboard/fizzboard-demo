@@ -9,27 +9,47 @@ export const BOARD_URL_PARAMS_COLUMN_COUNT = "columns";
 export const BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID = "settingId";
 
 
-export const createBoardUrl = (
+// export const createBoardUrl = (
+//   boardId: FzbBoardId,
+//   rowCount: number,
+//   columnCount: number,
+//   boardLocationSettingId: BoardLocationSettingId
+// ) => {
+
+//   const boardUrl = joinPaths(SERVER_URL, "/boards/", boardId);
+//   const boardUrlWithParams = boardUrl + "?" + 
+//     BOARD_URL_PARAMS_ROW_COUNT + "=" + rowCount + "&" +
+//     BOARD_URL_PARAMS_COLUMN_COUNT + "=" + columnCount + "&" +
+//     BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID + "=" + boardLocationSettingId;
+//   return boardUrlWithParams;
+// }
+
+
+export const createShowBoardUrl = (
   boardId: FzbBoardId,
-  rowCount: number,
-  columnCount: number,
-  boardLocationSettingId: BoardLocationSettingId
+  _rowCount: number,
+  _columnCount: number,
+  _boardLocationSettingId: BoardLocationSettingId
 ) => {
 
   const boardUrl = joinPaths(SERVER_URL, "/boards/", boardId);
-  const boardUrlWithParams = boardUrl + "?" + 
-    BOARD_URL_PARAMS_ROW_COUNT + "=" + rowCount + "&" +
-    BOARD_URL_PARAMS_COLUMN_COUNT + "=" + columnCount + "&" +
-    BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID + "=" + boardLocationSettingId;
-  return boardUrlWithParams;
+  return boardUrl;
+
+  // const boardUrlWithParams = boardUrl + "?" + 
+  //   BOARD_URL_PARAMS_ROW_COUNT + "=" + rowCount + "&" +
+  //   BOARD_URL_PARAMS_COLUMN_COUNT + "=" + columnCount + "&" +
+  //   BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID + "=" + boardLocationSettingId;
+  // return boardUrlWithParams;
 }
 
-export const createSendPostToScreenUrl = (screenId: FzbScreenId, boardLocationSettingId: BoardLocationSettingId) => {
+export const createSendPostToScreenUrl = (screenId: FzbScreenId) => {
   const sendPostToScreenPath = joinPaths(SERVER_URL, "/post-to-screen/", screenId);
   
-  const sendPostToScreenUrl = boardLocationSettingId ? 
-    sendPostToScreenPath + "?" + BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID + "=" + boardLocationSettingId :
-    sendPostToScreenPath;
+  return sendPostToScreenPath;
 
-  return sendPostToScreenUrl;
+  // const sendPostToScreenUrl = boardLocationSettingId ? 
+  //   sendPostToScreenPath + "?" + BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID + "=" + boardLocationSettingId :
+  //   sendPostToScreenPath;
+
+  // return sendPostToScreenUrl;
 }

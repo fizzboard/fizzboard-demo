@@ -3,46 +3,21 @@ import { FizzBoardAppFrame } from "~/components/app-frame/app-frame"
 import { useDemoUserData } from "~/demo-content/demo-user-context";
 import { useState } from "react";
 import { DemoProfileRole, UserProfile } from "~/zod-types/demo-users/user-profile";
-import { TradeShowVendorData } from "~/demo-content/user-data/trade-show-vendor";
-import { LibrarianAdminData } from "~/demo-content/user-data/librarian";
-import { CorporateHrAdminData } from "~/demo-content/user-data/hr-corporate";
-import { TradeShowOrganizerScreenAdminData } from "~/demo-content/user-data/trade-show-organizer";
-import { ProudParentData } from "~/demo-content/user-data/proud-parent";
-import { TeamLeadCorporateData } from "~/demo-content/user-data/team-lead-corporate";
 import { UserOption } from "./user-option";
-
-
-const AllDemoUsersData = [
-  TradeShowVendorData,
-  TeamLeadCorporateData,
-  ProudParentData,
-  TradeShowOrganizerScreenAdminData,
-  CorporateHrAdminData,
-  LibrarianAdminData,
-]
-
-const AllAdminUsersData = Object.values(AllDemoUsersData)
-  .filter(user => user.profile.demoRole === "DisplayAdmin")
-  .sort((a, b) => a.profile.name.localeCompare(b.profile.name));
-
-const AllMessagePosterUsersData = Object.values(AllDemoUsersData)
-  .filter(user => user.profile.demoRole === "MessagePoster")
-  .sort((a, b) => a.profile.name.localeCompare(b.profile.name));
+import { AllAdminUsersData, AllDemoUsersData, AllMessagePosterUsersData, updateInitialUserInStorage } from "~/data/demo-user-data/initial-user-data";
 
 
 export const DemoChooseProfilePage = () => {
   const { profile, setUserData } = useDemoUserData();
 
   const [tabValue, setTabValue] = useState<DemoProfileRole>(profile.demoRole);
-  console.log("TAB VALUE", tabValue);
-  console.log("PROFILE", profile);
 
   const setActiveUser = (userProfile: UserProfile) => {
-    console.log("SETTING ACTIVE USER", userProfile);
     const userData = AllDemoUsersData.find(user => user.profile.id === userProfile.id);
-    console.log("USER DATA", userData);
+
     if (userData) {
       setUserData(userData);
+      updateInitialUserInStorage(userData);
     } else {
       console.log("NO USER DATA FOUND");
     }

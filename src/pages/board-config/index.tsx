@@ -7,7 +7,7 @@ import { createFizzBoardId } from "~/utils";
 import { z } from "zod";
 import { FzbBoardConfigSchema } from "~/zod-types/board-config/board-config";
 import { BOARD_LOCATION_SETTINGS, BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
-import { createBoardUrl } from "~/url-utils";
+import { createShowBoardUrl } from "~/url-utils";
 import { FzbBoardId } from "~/zod-types/branded-strings";
 
 
@@ -49,7 +49,7 @@ export const DemoBoardLauncher = () => {
     console.log(data);
   };
 
-  const launchBoardUrl = createBoardUrl(
+  const launchBoardUrl = createShowBoardUrl(
     boardId as FzbBoardId,
     rowCount,
     columnCount,

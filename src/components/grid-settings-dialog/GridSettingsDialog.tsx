@@ -80,6 +80,7 @@ export const GridSettingsDialog = ({
           <ScreenSettingsComponent
             screenSettings={activeScreenSettings}
             onScreenSettingsUpdate={onScreenSettingsChange}
+            isDisabled={true}
           />
         </Box>
       </DialogContent>

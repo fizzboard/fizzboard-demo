@@ -12,8 +12,6 @@ export const MyBoardItem = ({ board }: MyBoardItemProps) => {
   
   const boardItemConfigLink = `/demo-board-configs/${board.id}`;
   
-  console.log("BOARD ITEM", board)
-
   const navigateToBoardItemConfig = () => {
     navigate(boardItemConfigLink);
   }

@@ -6,6 +6,7 @@ import { FzbBoardId } from "~/zod-types/branded-strings"
 export const mapDemoBoardConfigToUserBoard = (boardConfig: DemoBoardConfigData): UserBoard => {
   return {
     id: boardConfig.id as unknown as FzbBoardId,
+    // id: createFizzBoardId(),
     name: boardConfig.name,
     description: boardConfig.description,
     createdAt: new Date(),

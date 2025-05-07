@@ -5,15 +5,17 @@ import { getGridCoordinate } from "~/utils";
 import { ScreenContentComponent } from "../screen-content/ScreenContentComponent";
 import { ScreenPost } from "~/zod-types/screen-post";
 import { createSendPostToScreenUrl } from "~/url-utils";
-import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
+import { FzbScreenConfigData } from "~/zod-types/screen-config/fzb-screen-config";
+// import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 
 
 interface BoardComponentProps {
   rowCount: number;
   columnCount: number;
-  boardLocationSettingId: BoardLocationSettingId;
+  // boardLocationSettingId: BoardLocationSettingId;
     
   screenPosts: ScreenPost[];
+  allScreenSettings: FzbScreenConfigData[],
   
   isFullscreen: boolean;
   onRequestFullscreen: () => void;
@@ -22,10 +24,10 @@ interface BoardComponentProps {
 export const BoardComponent = ({ 
   rowCount, 
   columnCount,
-  boardLocationSettingId,
+  // boardLocationSettingId,
     
   screenPosts,
-  
+  allScreenSettings,
   isFullscreen,
   onRequestFullscreen,
 }: BoardComponentProps) => {
@@ -45,8 +47,8 @@ export const BoardComponent = ({
         width: '100%',
         height: '100%',
         display: 'grid',
-        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-        gridTemplateRows: `repeat(${rowCount}, 1fr)`,
+        gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
+        gridTemplateRows: `repeat(${rowCount}, minmax(0, 1fr))`,
         boxSizing: 'border-box',
         backgroundColor: 'background.default',
         position: 'relative',
@@ -78,7 +80,9 @@ export const BoardComponent = ({
             const { screenId, postData } = screenPosts[screenIndex];
 
             const gridCoordinate = getGridCoordinate(rowIndex, colIndex);
-            const sendPostToScreenUrl = createSendPostToScreenUrl(screenId, boardLocationSettingId);
+            const sendPostToScreenUrl = createSendPostToScreenUrl(screenId);
+
+            const screenSettings = allScreenSettings[screenIndex];
             
             return (
               <ScreenContentComponent
@@ -87,6 +91,7 @@ export const BoardComponent = ({
                 screenPostData={postData}
                 gridCoordinate={gridCoordinate}
                 sendPostToScreenUrl={sendPostToScreenUrl}
+                screenConfig={screenSettings}
               />
             );
           })
