@@ -2,8 +2,11 @@ import { z } from "zod";
 import { FzbBasicPostDataSchema } from "./fzb-basic-post";
 
 
+export const POST_TYPE_IFRAME_LINK = "iframe-link" as const;
+
+
 export const FzbIframeLinkPostDataSchema = FzbBasicPostDataSchema.extend({
-  postType: z.literal("iframe-link"),
+  postType: z.literal(POST_TYPE_IFRAME_LINK),
   iframeUrl: z.string(),
 });
 

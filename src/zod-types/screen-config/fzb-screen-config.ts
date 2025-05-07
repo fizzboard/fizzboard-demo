@@ -19,6 +19,6 @@ export const FzbScreenConfigDataSchema = z.discriminatedUnion("screenType", [
 
 export type FzbScreenConfigData = z.infer<typeof FzbScreenConfigDataSchema>;
 
-export const FzbScreenConfigTypesSchema = z.union(
-  FzbScreenConfigDataSchema.options.map(schema => schema.shape.screenType)
-).brand("FzbScreenConfigType");
+// export const FzbScreenConfigTypesSchema = z.union(
+//   FzbScreenConfigDataSchema.options.map(schema => schema.shape.screenType)
+// ).brand("FzbScreenConfigType");
