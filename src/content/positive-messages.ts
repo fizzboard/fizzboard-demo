@@ -1,0 +1,22 @@
+export const cookieMessages = [
+  "Every day is a new opportunity to grow 🌱",
+  "Your potential is limitless - keep reaching higher 🚀",
+  "Challenges are just opportunities in disguise 💪",
+  "The only limits that exist are the ones you create 🌟",
+  "Your journey is unique - embrace every step 🛤️",
+  "Great things never come from comfort zones 🌈",
+  "Success is built on small daily efforts 🏗️",
+  "Your dreams are valid - chase them relentlessly ⭐",
+  "Progress, not perfection, is the goal 📈",
+  "Every setback is a setup for a comeback 🔄",
+  "You are stronger than you think 💫",
+  "The best view comes after the hardest climb 🏔️",
+  "Your story isn't over yet - keep writing 📖",
+  "Small steps lead to big achievements 👣",
+  "Believe in yourself and all that you are 🌟",
+  "Your attitude determines your direction 🧭",
+  "Growth begins at the end of your comfort zone 🌱",
+  "You are capable of amazing things ✨",
+  "The only way to fail is to stop trying 🎯",
+  "Your potential is greater than any obstacle 🏆"
+]; 

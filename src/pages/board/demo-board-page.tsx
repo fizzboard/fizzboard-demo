@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
-import { FizzBoardAppFrame } from '~/components/app-frame/app-frame';
 import { FzbBoardId } from '~/zod-types/branded-strings';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Inspector } from "tinybase/ui-react-inspector"
 import { FizzBoardTbStoreBoardScreensProvider } from '~/tinybase/FizzBoardTbStoreBoardScreensProvider';
 import { BoardComponentWrapper } from '~/components/board-component/board-component-wrapper';
+import { FizzBoardAppBar } from '~/components/app-bar/app-bar';
+import { Box } from '@mui/material';
+import { APP_BAR_HEIGHT } from '~/components/app-bar/app-bar';
+import { FullScreenContainer } from './full-screen-container';
+import { useDemoUserData } from '~/demo-content/demo-user-context';
+import { GRID_DIMENSION_OPTIONS } from '~/zod-types/board-config/grid-dimensions';
 
 
 export const DemoBoardPage = () => {
@@ -12,15 +17,8 @@ export const DemoBoardPage = () => {
   const { id } = useParams();
   const boardId = id as FzbBoardId;
 
-  const [searchParams] = useSearchParams();
-  const rows = searchParams.get('rows') ?? 1;
-  const columns = searchParams.get('columns') ?? 1;
-
-  const rowCount = Number(rows);
-  const columnCount = Number(columns);
-
+  const { boards } = useDemoUserData();
   const [isFullscreen, setIsFullscreen] = useState(false);
-  
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -34,6 +32,22 @@ export const DemoBoardPage = () => {
     };
   }, []);
 
+
+  const board = boards.find(b => b.id === boardId);
+
+  if (!board) {
+    return <div>Demo Board not found</div>;
+  }
+
+  const { gridDimensionsId, allScreenSettings } = board;
+  const gridDimensionsOption = GRID_DIMENSION_OPTIONS.find(option => option.id === gridDimensionsId);
+  
+  if (!gridDimensionsOption) {
+    return <div>Grid dimensions not found</div>;
+  }
+  const { rowCount, columnCount } = gridDimensionsOption;
+
+
   const onRequestFullscreen = () => {
     document.documentElement.requestFullscreen();
   }
@@ -43,22 +57,38 @@ export const DemoBoardPage = () => {
     <FizzBoardTbStoreBoardScreensProvider tbBoardStoreId={boardId}>
       {
         isFullscreen ? (
-          <BoardComponentWrapper
-            rowCount={rowCount}
-            columnCount={columnCount}
-            isFullscreen={isFullscreen}
-            onRequestFullscreen={onRequestFullscreen}
-          />
-        ) : (
-          <FizzBoardAppFrame>
+          <FullScreenContainer>
             <BoardComponentWrapper
               rowCount={rowCount}
               columnCount={columnCount}
+              // boardLocationSettingId={boardLocationSettingId}
+              allScreenSettings={allScreenSettings}
               isFullscreen={isFullscreen}
               onRequestFullscreen={onRequestFullscreen}
             />
-          <Inspector />
-        </FizzBoardAppFrame>
+          </FullScreenContainer>
+        ) : (
+          <>
+            <FizzBoardAppBar />
+            <Box 
+              sx={{
+                width: '100vw',
+                paddingTop: `${APP_BAR_HEIGHT}`,
+                height: `calc(100vh - ${APP_BAR_HEIGHT})`,
+                overflow: 'hidden',
+              }}
+            >
+              <BoardComponentWrapper
+                rowCount={rowCount}
+                columnCount={columnCount}
+                // boardLocationSettingId={boardLocationSettingId}
+                allScreenSettings={allScreenSettings}
+                isFullscreen={isFullscreen}
+                onRequestFullscreen={onRequestFullscreen}
+              />
+            <Inspector />
+          </Box>
+        </>
         )
       }        
     </FizzBoardTbStoreBoardScreensProvider>

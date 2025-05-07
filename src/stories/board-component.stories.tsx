@@ -5,14 +5,24 @@ import { MemoryRouter } from 'react-router-dom';
 import { BoardComponent } from '~/components/board-component/board-component';
 import { createScreenIdForRowAndColumn } from '~/utils';
 import { FzbBoardId, FzbPostId } from '~/zod-types/branded-strings';
+import { SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE } from '~/zod-types/screen-config/fzb-poster-placed-screen-image';
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK } from '~/zod-types/screen-config/fzb-show-permanent-blank';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: 'FizzBoard/BoardComponent',
   component: BoardComponent,
   parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: 'centered',
+    // layout: 'fullscreen',
+    previewTabs: {
+      canvas: { hidden: true },
+      'storybook/docs/panel': { hidden: true },
+      'storybook/actions/panel': { hidden: true },
+    },
+    viewMode: 'story',
+    options: {
+      showToolbar: false,
+    },
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
@@ -54,10 +64,15 @@ export const SingleScreenNoPost: Story = {
     isFullscreen: false,
     screenPosts: [{ screenId: screen1Id, postData: null }],
     onRequestFullscreen: fn(),
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK,
+      }
+    ],
   },
 }
 
-export const SingleScreenWithTextContentPost: Story = {
+export const SingleScreenWithImagePost: Story = {
   args: {
     rowCount: 1,
     columnCount: 1,
@@ -68,10 +83,15 @@ export const SingleScreenWithTextContentPost: Story = {
         postType: 'text-content',
         id: post1Id,
         name: 'Test Post',
-        textContent: 'This is a test post',
+        textContent: 'This is a 1x1 test post',
       }
     }],
     onRequestFullscreen: fn(),
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      }
+    ],
   },
 }
 
@@ -87,7 +107,7 @@ export const MultiScreen2x2WithSomePosts: Story = {
           postType: 'text-content',
           id: post1Id,
           name: 'Test Post',
-          textContent: 'This is a test post',
+          textContent: 'This is a 2x2 test post',
         }
       },
       {
@@ -109,11 +129,25 @@ export const MultiScreen2x2WithSomePosts: Story = {
           postType: 'iframe-link',
           id: post4Id,
           name: 'Test Post 4',
-          iframeUrl: 'https://www.google.com',
+          iframeUrl: 'https://fizzboard.github.io/fizzboard-demo/',
         }
       }
     ],
     onRequestFullscreen: fn(),
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+    ],
   },
 }
 
@@ -123,6 +157,7 @@ export const MismatchScreenAndIdsCount: Story = {
     columnCount: 10,
     isFullscreen: false,
     screenPosts: [],
+    allScreenSettings: [],
     onRequestFullscreen: fn(),
   },
 }

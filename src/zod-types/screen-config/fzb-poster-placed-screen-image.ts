@@ -1,0 +1,20 @@
+import { z } from "zod";
+
+
+export const SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE = 'poster-placed-screen-image';
+
+export const PosterPlaceScreenImageInvitationParametersSchema = z.object({
+  screenType: z.literal('text-wrapped'),
+  aboveQrCodeText: z.string(),
+  belowQrCodeText: z.string(),
+});
+
+export type PosterPlaceScreenImageInvitationParameters = z.infer<typeof PosterPlaceScreenImageInvitationParametersSchema>;
+
+export const FzbScreenConfigPosterPlacedScreenImageDataSchema = z.object({
+  screenType: z.literal(SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE),
+  invitationParameters: PosterPlaceScreenImageInvitationParametersSchema.optional(),
+});
+
+
+export type FzbScreenConfigPosterPlacedScreenImageData = z.infer<typeof FzbScreenConfigPosterPlacedScreenImageDataSchema>;

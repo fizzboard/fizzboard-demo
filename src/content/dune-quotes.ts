@@ -1,0 +1,22 @@
+export const duneQuotes = [
+  "Fear is the mind-killer. Fear is the little-death that brings total obliteration.",
+  "I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me.",
+  "The mystery of life isn't a problem to solve, but a reality to experience.",
+  "A process cannot be understood by stopping it. Understanding must move with the flow of the process, must join it and flow with it.",
+  "The power to destroy a thing is the absolute control over it.",
+  "Deep in the human unconscious is a pervasive need for a logical universe that makes sense. But the real universe is always one step beyond logic.",
+  "The concept of progress acts as a protective mechanism to shield us from the terrors of the future.",
+  "The best place to hide is often in plain sight.",
+  "Hope clouds observation.",
+  "The mind commands the body and it obeys. The mind orders itself and meets resistance.",
+  "The people who can destroy a thing, they control it.",
+  "The first step in avoiding a trap is knowing of its existence.",
+  "The mystery of life isn't a problem to solve, but a reality to experience.",
+  "The greatest peril to the Giver is the force that takes. The greatest peril to the Taker is the force that gives.",
+  "The concept of progress acts as a protective mechanism to shield us from the terrors of the future.",
+  "The power to destroy a thing is the absolute control over it.",
+  "The mystery of life isn't a problem to solve, but a reality to experience.",
+  "The mind commands the body and it obeys. The mind orders itself and meets resistance.",
+  "The first step in avoiding a trap is knowing of its existence.",
+  "The people who can destroy a thing, they control it."
+]; 

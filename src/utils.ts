@@ -1,4 +1,4 @@
-import { FzbBoardId, FzbPostId, FzbScreenId, FzbScreenSlotId, FzbScreenSlotIdSchema } from "./zod-types/branded-strings";
+import { FzbBoardId, FzbPostId, FzbScreenGridName, FzbScreenId, FzbScreenSlotId, FzbScreenSlotIdSchema } from "./zod-types/branded-strings";
 import { getUniqueId } from 'tinybase';
 
 // Use Vite's import.meta.env to get the base URL
@@ -14,8 +14,16 @@ export const getColumnLetter = (index: number) => {
 };
 
 
-export const getGridCoordinate = (rowIndex: number, colIndex: number): FzbScreenSlotId => {
-  return `${getColumnLetter(colIndex)}${rowIndex + 1}` as FzbScreenSlotId;
+export const getGridCoordinate = (rowIndex: number, colIndex: number): FzbScreenGridName => {
+  return `${getColumnLetter(colIndex)}${rowIndex + 1}` as FzbScreenGridName;
+};
+
+
+export const getGridCellName = (index: number, columnCount: number): FzbScreenGridName => {
+  const rowIndex = Math.floor(index / columnCount);
+  const colIndex = index % columnCount;
+  const columnLetter = getColumnLetter(colIndex);
+  return `${columnLetter}${rowIndex + 1}` as FzbScreenGridName;
 };
 
 

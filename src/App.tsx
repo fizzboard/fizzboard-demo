@@ -1,9 +1,14 @@
+import { DemoUserDataProvider } from './demo-content/demo-user-context'
 import { FizzboardRoutes } from './routes'
+import { initialUserData } from './data/demo-user-data/initial-user-data'
 
 
 export const FizzboardApp = () => {
-  
   return (
-    <FizzboardRoutes />
+    <DemoUserDataProvider
+      initialUserData={initialUserData}
+    >
+      <FizzboardRoutes />
+    </DemoUserDataProvider>
   )
 }

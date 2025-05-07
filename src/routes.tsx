@@ -5,6 +5,9 @@ import { DemoMyPosts } from "./pages/my-posts";
 import { DemoScreenSlot } from "./pages/screens-by-id";
 import { LandingPage } from "./pages/landing";
 import { PostToScreenPage } from "./pages/post-to-screen";
+import { DemoChooseProfilePage } from "./pages/demo-choose-profile";
+import { DemoMyBoardsPage } from "./pages/my-boards";
+import { DemoMyBoardConfigPage } from "./pages/my-boards/my-board-config";
 
 
 export const FizzboardRoutes = () => {
@@ -13,13 +16,17 @@ export const FizzboardRoutes = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/post-to-screen/:id" element={<PostToScreenPage />} />
-        <Route path="/launch" element={<DemoBoardLauncher />} />
-        <Route path="/my-posts" element={<DemoMyPosts />} />
 
+        <Route path="/launch" element={<DemoBoardLauncher />} />
         <Route path="/boards/:id" element={
-          <DemoBoardPage 
-          />}
+          <DemoBoardPage />}
         />
+
+        <Route path="/my-posts" element={<DemoMyPosts />} />
+        <Route path="/my-boards" element={<DemoMyBoardsPage />} />
+        <Route path="/demo-board-configs/:id" element={<DemoMyBoardConfigPage />} />
+
+        <Route path="/choose-profile" element={<DemoChooseProfilePage />} />
 
         <Route path="/screens/:id" element={<DemoScreenSlot />} />
         {/* <Route path="/test/post-to-screen" element={<TestPostToScreenPage />} /> */}

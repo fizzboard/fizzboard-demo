@@ -1,29 +1,34 @@
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/material";
-import { APP_BAR_HEIGHT } from "../app-bar/app-bar";
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import { getGridCoordinate, joinPaths, SERVER_URL } from "~/utils";
+import { getGridCoordinate } from "~/utils";
 import { ScreenContentComponent } from "../screen-content/ScreenContentComponent";
 import { ScreenPost } from "~/zod-types/screen-post";
+import { createSendPostToScreenUrl } from "~/url-utils";
+import { FzbScreenConfigData } from "~/zod-types/screen-config/fzb-screen-config";
+// import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-setting";
 
 
 interface BoardComponentProps {
   rowCount: number;
   columnCount: number;
-  isFullscreen: boolean;
-  
+  // boardLocationSettingId: BoardLocationSettingId;
+    
   screenPosts: ScreenPost[];
+  allScreenSettings: FzbScreenConfigData[],
   
+  isFullscreen: boolean;
   onRequestFullscreen: () => void;
 }
 
 export const BoardComponent = ({ 
   rowCount, 
   columnCount,
-  isFullscreen,
-  
+  // boardLocationSettingId,
+    
   screenPosts,
-  
+  allScreenSettings,
+  isFullscreen,
   onRequestFullscreen,
 }: BoardComponentProps) => {
 
@@ -34,21 +39,20 @@ export const BoardComponent = ({
     throw new Error(`Expected ${expectedScreenCount} screens, but got ${screenPosts.length}`);
   }
 
-  const boardHeight = isFullscreen ? '100vh' : `calc(100vh - ${APP_BAR_HEIGHT})`;
-  
   return (
     <>
       <title>FizzBoard Demo - Board</title>
       <Box
         sx={{
-        width: '100vw',
-        height: boardHeight,
+        width: '100%',
+        height: '100%',
         display: 'grid',
-        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-        gridTemplateRows: `repeat(${rowCount}, 1fr)`,
+        gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
+        gridTemplateRows: `repeat(${rowCount}, minmax(0, 1fr))`,
         boxSizing: 'border-box',
         backgroundColor: 'background.default',
         position: 'relative',
+        overflow: 'hidden',
       }}
       >
         {showGoFullscreenButton && (
@@ -76,8 +80,9 @@ export const BoardComponent = ({
             const { screenId, postData } = screenPosts[screenIndex];
 
             const gridCoordinate = getGridCoordinate(rowIndex, colIndex);
+            const sendPostToScreenUrl = createSendPostToScreenUrl(screenId);
 
-            const sendPostToScreenUrl = joinPaths(SERVER_URL, "/post-to-screen/", screenId);
+            const screenSettings = allScreenSettings[screenIndex];
             
             return (
               <ScreenContentComponent
@@ -86,6 +91,7 @@ export const BoardComponent = ({
                 screenPostData={postData}
                 gridCoordinate={gridCoordinate}
                 sendPostToScreenUrl={sendPostToScreenUrl}
+                screenConfig={screenSettings}
               />
             );
           })

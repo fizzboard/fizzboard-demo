@@ -1,34 +1,35 @@
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { FzbPostData, FzbPostType } from '~/zod-types/posts/fzb-post';
-import { createDefaultPostDataForPostType } from './utils';
+import { FzbPostDataType } from '~/zod-types/posts/fzb-basic-post';
 
 
 interface PostTypeSelectorProps {
-  value: FzbPostType;
-  onChange: (type: FzbPostData) => void;
+  allowedPostTypes: FzbPostDataType[];
+  value: FzbPostDataType;
+  onChange: (type: FzbPostDataType) => void;
 }
 
-export const PostTypeSelector = ({ value, onChange }: PostTypeSelectorProps) => {
+export const PostTypeSelector = ({ value, onChange, allowedPostTypes }: PostTypeSelectorProps) => {
 
-  const handleChange = (postType: FzbPostType) => {
+  const handleChange = (postType: FzbPostDataType) => {
     console.log('postType', postType);
-    const postData = createDefaultPostDataForPostType(postType);
-    onChange(postData);
+    onChange(postType);
   };
 
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="post-type-select-label">Post Type</InputLabel>
+      <InputLabel id="post-type-select-label">Type of Post</InputLabel>
       <Select
         labelId="post-type-select-label"
         value={value}
-        label="Post Type"
-        onChange={(e) => handleChange(e.target.value as FzbPostType)}
+        label="Type of Post"
+        onChange={(e) => handleChange(e.target.value as FzbPostDataType)}
       >
-        <MenuItem value="text-content">Text</MenuItem>
-        <MenuItem value="image-link">Image</MenuItem>
-        <MenuItem value="iframe-link">Iframe</MenuItem>
+        {
+          allowedPostTypes.map((postType) => (
+            <MenuItem key={postType} value={postType}>{postType}</MenuItem>
+          ))
+        }
       </Select>
     </FormControl>
   );

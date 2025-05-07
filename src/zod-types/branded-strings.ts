@@ -9,6 +9,10 @@ export const FzbPostIdSchema = z.string().brand('FzbPostId');
 export type FzbPostId = z.infer<typeof FzbPostIdSchema>;
 
 
+export const FzbScreenConfigTypeSchema = z.string().brand('FzbScreenConfigType');
+export type FzbScreenConfigType = z.infer<typeof FzbScreenConfigTypeSchema>;
+
+
 export const FzbLetterNumberIdSchema = z.string()
   .regex(/^[A-Z]([0-9]|[1-9][0-9])$/, 'Must be a capital letter A-Z followed by a number 0-99')
   .brand('FzbLetterNumberId');
@@ -17,6 +21,10 @@ export type FzbLetterNumberId = z.infer<typeof FzbLetterNumberIdSchema>;
 
 export const FzbScreenSlotIdSchema = FzbLetterNumberIdSchema.brand('FzbScreenSlotId');
 export type FzbScreenSlotId = z.infer<typeof FzbScreenSlotIdSchema>;
+
+
+export const FzbScreenGridNameSchema = z.string().brand('FzbScreenGridName');
+export type FzbScreenGridName = z.infer<typeof FzbScreenGridNameSchema>;
 
 
 export const FzbScreenIdSchema = z.string()

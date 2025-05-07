@@ -16,6 +16,6 @@ type Story = StoryObj<typeof ScreenContentIframeLinkComponent>;
 
 export const Default: Story = {
   args: {
-    iframeUrl: 'https://www.google.com',
+    iframeUrl: 'https://fizzboard.github.io/fizzboard-demo/',
   },
 };

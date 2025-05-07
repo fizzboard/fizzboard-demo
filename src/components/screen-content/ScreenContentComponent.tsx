@@ -1,10 +1,14 @@
-import { Paper } from "@mui/material";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
-import { FzbScreenId } from "~/zod-types/branded-strings";
+import { FzbPostId, FzbScreenId } from "~/zod-types/branded-strings";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
-import { PostedDataRenderer } from "./post-types/posted-data-renderer";
+import { FzbScreenConfigData } from "~/zod-types/screen-config/fzb-screen-config";
+import { ScreenContentPosterPlacedScreenImage } from "./sc-poster-invitation/sc-poster-placed-screen-image";
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK } from "~/zod-types/screen-config/fzb-show-permanent-blank";
+import { ScreenContentPermanentBlank } from "./sc-show/permanent-blank";
+import { SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE } from "~/zod-types/screen-config/fzb-poster-placed-screen-image";
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK } from "~/zod-types/screen-config/fzb-show-permanent-image";
+import { ScreenContentImageLinkComponent } from "./post-types/image-link/screen-content-image-link-component";
+import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
+
 
 export interface Dimensions {
   width: number;
@@ -16,55 +20,50 @@ interface ScreenContentComponentProps {
   screenPostData: FzbPostData | null;
   gridCoordinate: string;
   sendPostToScreenUrl: string;
+  screenConfig: FzbScreenConfigData;
 }
 
 export const ScreenContentComponent = ({ 
   screenId,
   screenPostData, 
   gridCoordinate, 
-  sendPostToScreenUrl 
+  sendPostToScreenUrl,
+  screenConfig,
 }: ScreenContentComponentProps) => {
 
-  const paperRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState<Dimensions | null>(null);
+  switch (screenConfig.screenType) {
+    case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK:
+      return (
+        <ScreenContentPermanentBlank />
+      );
   
-  useEffect(() => {
-    const element = paperRef.current;
-    if (!element) return;
-
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (entry) {
-        const { width, height } = entry.contentRect;
-        setDimensions({ width, height });
+    case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK: {
+      const screenPostData: FzbImageLinkPostData = {
+        id: `image-link-post-${screenId}` as FzbPostId,
+        name: "Permanent Image",
+        postType: "image-link",
+        imageUrl: screenConfig.imageUrl,
       }
-    });
 
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
+      return (
+        <ScreenContentImageLinkComponent
+          {...screenPostData}
+        />
+      );
+    }
 
-  return (
-    <Paper
-      ref={paperRef}
-      key={screenId}
-      elevation={3}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: 'text.secondary',
-        border: '1px solid #000',
-        flexDirection: 'column',
-        gap: 1,
-      }}
-    >
-      <PostedDataRenderer
-        postedData={screenPostData}
-        dimensions={dimensions}
-        sendPostToScreenUrl={sendPostToScreenUrl}
-        gridCoordinate={gridCoordinate}
-      />
-    </Paper>
-  );
+    case SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE:
+      return (
+        <ScreenContentPosterPlacedScreenImage
+          screenId={screenId}
+          screenPostData={screenPostData}
+          gridCoordinate={gridCoordinate}
+          sendPostToScreenUrl={sendPostToScreenUrl}
+          screenConfig={screenConfig}
+        />
+      );
+
+    default:
+      return <div>Unsupported screen config type: {screenConfig.screenType}</div>;
+  }
 };
