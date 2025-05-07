@@ -5,7 +5,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { BoardComponent } from '~/components/board-component/board-component';
 import { createScreenIdForRowAndColumn } from '~/utils';
 import { FzbBoardId, FzbPostId } from '~/zod-types/branded-strings';
-import { BoardLocationSettingId } from '~/zod-types/board-config/board-location-setting';
+import { SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE } from '~/zod-types/screen-config/fzb-poster-placed-screen-image';
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK } from '~/zod-types/screen-config/fzb-show-permanent-blank';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -61,18 +62,21 @@ export const SingleScreenNoPost: Story = {
     rowCount: 1,
     columnCount: 1,
     isFullscreen: false,
-    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [{ screenId: screen1Id, postData: null }],
     onRequestFullscreen: fn(),
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK,
+      }
+    ],
   },
 }
 
-export const SingleScreenWithTextContentPost: Story = {
+export const SingleScreenWithImagePost: Story = {
   args: {
     rowCount: 1,
     columnCount: 1,
     isFullscreen: false,
-    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [{
       screenId: screen1Id,
       postData: {
@@ -83,6 +87,11 @@ export const SingleScreenWithTextContentPost: Story = {
       }
     }],
     onRequestFullscreen: fn(),
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      }
+    ],
   },
 }
 
@@ -91,7 +100,6 @@ export const MultiScreen2x2WithSomePosts: Story = {
     rowCount: 2,
     columnCount: 2,
     isFullscreen: false,
-    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [
       {
         screenId: screen1Id,
@@ -126,6 +134,20 @@ export const MultiScreen2x2WithSomePosts: Story = {
       }
     ],
     onRequestFullscreen: fn(),
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
+      },
+    ],
   },
 }
 
@@ -134,8 +156,8 @@ export const MismatchScreenAndIdsCount: Story = {
     rowCount: 7,
     columnCount: 10,
     isFullscreen: false,
-    boardLocationSettingId: "bls-other" as BoardLocationSettingId,
     screenPosts: [],
+    allScreenSettings: [],
     onRequestFullscreen: fn(),
   },
 }

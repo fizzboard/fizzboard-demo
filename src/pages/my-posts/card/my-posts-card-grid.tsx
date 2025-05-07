@@ -46,16 +46,16 @@ export const MyPostsCardGrid = (props: IMyPostsCardGridProps) => {
         }}
       >
         {sortedAndFilteredPosts.map((post) => (
-          <Grid
-            key={post.id}
-            size={{
-              xs: 12,              
-              sm: 6,
-              md: 4,
-            }}
-          >
+          // <Grid
+          //   key={post.id}
+          //   size={{
+          //     xs: 12,              
+          //     sm: 6,
+          //     md: 4,
+          //   }}
+          // >
             <MyPostCardWrapper post={post} actionOptions={actionOptions} />
-          </Grid>
+          // </Grid>
         ))}
       </Grid>
     </Box>

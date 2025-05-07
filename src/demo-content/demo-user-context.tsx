@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { UserData, UserDataContextType } from '~/components/user-context/user-data-context';
 import { UserProfile } from '~/zod-types/demo-users/user-profile';
-import { UserPost } from '~/zod-types/demo-users/user-post';
 import { UserBoard } from '~/zod-types/demo-users/user-board';
 import { UserScreen } from '~/zod-types/demo-users/user-screen';
 import { DemoBoardConfigData } from '~/zod-types/demo-users/demo-board-config-data';
+import { FzbPostData } from '~/zod-types/posts/fzb-post';
 
 
 interface DemoUserDataProviderProps {
@@ -19,7 +19,7 @@ const DemoUserDataContext = createContext<UserDataContextType | undefined>(undef
 
 export const DemoUserDataProvider = ({ children, initialUserData }: DemoUserDataProviderProps) => {
   const [profile, setProfile] = useState<UserProfile>(initialUserData.profile);
-  const [posts, setPosts] = useState<UserPost[]>(initialUserData.posts);
+  const [posts, setPosts] = useState<FzbPostData[]>(initialUserData.posts);
   const [boards, setBoards] = useState<UserBoard[]>(initialUserData.boards);
   const [screens, setScreens] = useState<UserScreen[]>(initialUserData.screens);
   const [demoBoardConfigs, setDemoBoardConfigs] = useState<DemoBoardConfigData[]>(initialUserData.demoBoardConfigs);

@@ -19,7 +19,9 @@ export const MyPostCard = (props: MyPostCardProps) => {
         p: 2,
         display: 'flex',
         flexDirection: 'column',
-        gap: 1
+        gap: 1,
+        padding: 2,
+        margin: 2,
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

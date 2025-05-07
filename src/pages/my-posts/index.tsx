@@ -1,14 +1,15 @@
-import { Box, Typography, Button, Stack } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
 import { useState } from "react";
 import { AddTextContentPostDialog } from "~/components/posts/AddTextContentPostDialog";
 import { AddImageLinkPostDialog } from "~/components/AddImageLinkPostDialog";
-import { MyPostsCardGrid } from "./card/my-posts-card-grid";
 import { FzbPostId, FzbScreenId } from "~/zod-types/branded-strings";
 import { QrCodeScanForScreenSlotDialog } from "~/components/qr-code/QrCodeScanForScreenSlotDialog";
 import { PostingToScreenDialog } from "~/components/posting-to-screen-dialog/posting-to-screen-dialog";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
 import { useDemoUserData } from "~/demo-content/demo-user-context";
+import { DefaultAppContainer } from "~/components/app-container/default-app-container";
+import { MyPostCardWrapper } from "./card/my-post-card-wrapper";
 
 
 export const DemoMyPosts = () => {
@@ -22,12 +23,13 @@ export const DemoMyPosts = () => {
   
   // const { myPosts } = useFizzBoardAppData();
   const { posts } = useDemoUserData();
-  const myPosts: FzbPostData[] = posts.map(post => ({
-    id: post.id as FzbPostId,
-    name: post.title,
-    postType: "text-content",
-    textContent: post.content,
-  }));
+  const myPosts = posts;
+  // const myPosts: FzbPostData[] = posts.map(post => ({
+  //   id: post.id as FzbPostId,
+  //   name: post.title,
+  //   postType: "text-content",
+  //   textContent: post.content,
+  // }));
 
   const handleAddTextContentPost = (data: { name: string; textContent: string }) => {
     // TODO: Implement post creation
@@ -56,16 +58,25 @@ export const DemoMyPosts = () => {
     setIsPosting(true);
   };
 
+  const actionOptions = [
+    {
+      label: "Scan QR",
+      onAction: handleScanQRForPostId,
+    }
+  ];
 
   return (
     <FizzBoardAppFrame>
       <title>FizzBoard Demo - My Posts</title>
-      <Box sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <DefaultAppContainer
+        flexDirection="column"
+      >
+      {/* <Box sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}> */}
           <Typography variant="h4" component="h1">
             My Posts
           </Typography>
-          <Stack direction="row" spacing={2}>
+          {/* <Stack direction="row" spacing={2}>
             <Button 
               variant="contained" 
               color="primary"
@@ -80,25 +91,30 @@ export const DemoMyPosts = () => {
             >
               New Image Post
             </Button>
-          </Stack>
-        </Box>
+          </Stack> */}
+        {/* </Box> */}
         <Typography variant="body1" component="p" gutterBottom>
           {myPosts.length} posts
         </Typography>
-        <MyPostsCardGrid
+
+        {myPosts.map((post) => (
+          <MyPostCardWrapper
+            key={post.id}
+            post={post}
+            actionOptions={actionOptions}
+          />
+        ))}
+        
+        {/* <MyPostsCardGrid
           sortedAndFilteredPosts={myPosts}
           sorting="none"
           activeSortingColumn="name"
           setSorting={() => {}}
           setActiveSortingColumn={() => {}}
-          actionOptions={[
-            {
-              label: "Scan QR",
-              onAction: handleScanQRForPostId,
-            }
-          ]}
-        />
-      </Box>
+          actionOptions={actionOptions}
+        /> */}
+      {/* </Box> */}
+      </DefaultAppContainer>
 
       <AddTextContentPostDialog
         open={isAddTextPostDialogOpen}

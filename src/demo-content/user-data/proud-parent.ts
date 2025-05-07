@@ -1,25 +1,29 @@
 import { UserData } from "~/components/user-context/user-data-context";
+import { SERVER_HOST } from "~/utils";
 import { FzbPostId } from "~/zod-types/branded-strings";
-import { UserPost } from "~/zod-types/demo-users/user-post";
+import { FzbPostData } from "~/zod-types/posts/fzb-post";
 
 
 
-const proudParentDemoPosts: UserPost[] = [
+const proudParentDemoPosts: FzbPostData[] = [
   {
     id: "1" as FzbPostId,
-    title: "Post 1",
-    content: "This is a text post",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    name: "Mystery Day",
+    postType: "image-link",
+    imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/proud-parents/proud-parent-picture-1.jpg`,
   },
   {
     id: "2" as FzbPostId,
-    title: "Post 2",
-    content: "This is a text post",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    name: "Maker Day",
+    postType: "image-link",
+    imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/proud-parents/proud-parent-picture-2.jpg`,
   },
-  
+  {
+    id: "3" as FzbPostId,
+    name: "Text Post",
+    postType: "text-content",
+    textContent: "This is a text post",
+  },
 ];
 
 

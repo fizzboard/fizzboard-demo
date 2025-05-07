@@ -54,14 +54,4 @@ export const MyPostCardWrapper: React.FC<MyPostCardWrapperProps> = ({
       </MyPostCard>
     );
   }
-
-  // console.log("post.postType", post.postType);
-
-
-  // // Fallback for unknown post types
-  // return (
-  //   <MyPostCard postData={post} actionOptions={actionOptions}>
-  //     <div>Unknown post type: {post.postType}</div>
-  //   </MyPostCard>
-  // );
 };
