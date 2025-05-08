@@ -4,10 +4,6 @@ import { Box } from '@mui/material';
 export const ScreenContentPdfLinkComponent = ({ ...postData }: FzbPdfLinkPostData) => {
   const { pdfUrl } = postData;
 
-  // console.log("pdfUrl", pdfUrl);
-
-  // const PDF_URL = "http://localhost:5173/fizzboard-demo/assets/demo-assets/pet-expo/pet-expo-map.pdf#toolbar=0";
-
   return (
     <Box
       sx={{

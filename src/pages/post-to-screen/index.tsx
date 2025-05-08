@@ -1,15 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Inspector } from "tinybase/ui-react-inspector";
 import { FizzBoardAppFrame } from "~/components/app-frame/app-frame";
 import { FizzBoardTbStoreBoardScreensProvider } from "~/tinybase/FizzBoardTbStoreBoardScreensProvider";
 import { FzbPostId, FzbScreenId } from "~/zod-types/branded-strings";
 import { Typography, Box } from "@mui/material";
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PostingToScreenDialog } from "~/components/posting-to-screen-dialog/posting-to-screen-dialog";
 import { getBoardIdFromScreenId } from "~/utils";
 import { useDemoUserData } from "~/demo-content/demo-user-context";
 import { MyPostsCardGrid } from "../my-posts/card/my-posts-card-grid";
+import { POST_TO_SCREEN_URL_PARAMS_DEMO_USER_PROFILE_ID } from "~/url-utils";
+import { AllDemoUsersData } from "~/data/demo-user-data/initial-user-data";
 
 
 export const PostToScreenPage = () => {
@@ -17,8 +19,9 @@ export const PostToScreenPage = () => {
   const { id } = useParams();
   const screenId = id as FzbScreenId;
 
-  // const [searchParams] = useSearchParams();
-  // const settingsId = searchParams.get(BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID);
+  const [searchParams] = useSearchParams();
+  const demoUserId = searchParams.get(POST_TO_SCREEN_URL_PARAMS_DEMO_USER_PROFILE_ID);
+
   // const boardLocationSettingId = BoardLocationSettingIdsEnum
   //   .safeParse(settingsId).success 
   //   ? BoardLocationSettingIdsEnum.parse(settingsId)
@@ -27,8 +30,9 @@ export const PostToScreenPage = () => {
   const boardId = getBoardIdFromScreenId(screenId);
 
   // const { myPosts } = useFizzBoardAppData();
-  const { posts } = useDemoUserData();
+  const { profile, posts, setUserData } = useDemoUserData();
   const myPosts = posts;
+
 
   // const [newPost, setNewPost] = useState<FzbPostData>(() => 
   //   createDefaultPostDataForBoardLocation(boardLocationSettingId));
@@ -36,7 +40,14 @@ export const PostToScreenPage = () => {
 
   const [postToSend, setPostToSend] = useState<FzbPostData | null>(null);
 
-
+  useEffect(() => {
+    const demoUser = AllDemoUsersData.find((user) => user.profile.id === demoUserId);
+    if (demoUser) {
+      setUserData(demoUser);
+    } else {
+      console.error("Demo user not found: ", demoUserId);
+    }
+  }, [demoUserId, profile.id, setUserData]);
 
   const handleSendExistingPostToScreen = (postId: FzbPostId) => {
     console.log("postId", postId);

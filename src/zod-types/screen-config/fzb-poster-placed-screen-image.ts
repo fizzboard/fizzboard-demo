@@ -7,6 +7,7 @@ export const PosterPlaceScreenImageInvitationParametersSchema = z.object({
   screenType: z.literal('text-wrapped'),
   aboveQrCodeText: z.string(),
   belowQrCodeText: z.string(),
+  demoUserId: z.string(),
 });
 
 export type PosterPlaceScreenImageInvitationParameters = z.infer<typeof PosterPlaceScreenImageInvitationParametersSchema>;

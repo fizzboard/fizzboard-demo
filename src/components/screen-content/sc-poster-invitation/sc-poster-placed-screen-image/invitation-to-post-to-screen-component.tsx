@@ -3,6 +3,7 @@ import { Dimensions } from ".";
 import { FzbScreenConfigPosterPlacedScreenImageData } from "~/zod-types/screen-config/fzb-poster-placed-screen-image";
 import { QRCodeSVG } from "qrcode.react";
 import { Box, Typography, Link } from "@mui/material";
+import { addUrlParam, POST_TO_SCREEN_URL_PARAMS_DEMO_USER_PROFILE_ID } from "~/url-utils";
 
 
 interface InvitationToPostToScreenComponentProps {
@@ -29,6 +30,10 @@ export const InvitationToPostToScreenComponent = (props: InvitationToPostToScree
       />
     )
   }
+
+  const urlWithDemoUserId = screenConfig.invitationParameters.demoUserId ?
+    addUrlParam(sendPostToScreenUrl, POST_TO_SCREEN_URL_PARAMS_DEMO_USER_PROFILE_ID, screenConfig.invitationParameters.demoUserId) :
+    sendPostToScreenUrl;
   
   return (
     <Box 
@@ -42,9 +47,9 @@ export const InvitationToPostToScreenComponent = (props: InvitationToPostToScree
         {screenConfig.invitationParameters.aboveQrCodeText}
       </Typography>
 
-      <Link href={sendPostToScreenUrl} target="_blank" rel="noopener noreferrer">
+      <Link href={urlWithDemoUserId} target="_blank" rel="noopener noreferrer">
         <QRCodeSVG 
-          value={sendPostToScreenUrl}
+          value={urlWithDemoUserId}
         />
       </Link>
 

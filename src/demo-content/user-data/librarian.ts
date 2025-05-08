@@ -29,6 +29,7 @@ const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
           screenType: "text-wrapped",
           aboveQrCodeText: "Have any pictures from past events?",
           belowQrCodeText: "Scan QR code to add your picture to the board!",
+          demoUserId: "demo-poster-proud-parent",
         },
       },
       {
@@ -37,6 +38,7 @@ const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
           screenType: "text-wrapped",
           aboveQrCodeText: "Have any pictures from past events?",
           belowQrCodeText: "Scan QR code to add your picture to the board!",
+          demoUserId: "demo-poster-proud-parent",
         },
       },
       {
