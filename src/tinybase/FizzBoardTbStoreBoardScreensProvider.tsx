@@ -102,6 +102,11 @@ export const FizzBoardTbStoreBoardScreensProvider = ({
     store.setCell(FIZZBOARD_SCREEN_GRID_TABLE, gridLocation, POST_DATA_JSON_COLUMN_KEY, postDataJson);
   };
 
+  const clearPostDataJsonForGridLocation = async (gridLocation: FzbScreenSlotId) => {
+    console.log("postToScreenApi::clearPostDataJsonForGridLocation", tbBoardStoreId, gridLocation);
+    store.delCell(FIZZBOARD_SCREEN_GRID_TABLE, gridLocation, POST_DATA_JSON_COLUMN_KEY);
+  }
+
   
   useEffect(() => {
     const initGridPostsData = () => {
@@ -138,6 +143,7 @@ export const FizzBoardTbStoreBoardScreensProvider = ({
     gridPostsData,
     postToScreenApi: {
       setPostDataJsonForGridLocation,
+      clearPostDataJsonForGridLocation,
     },
   };
   
