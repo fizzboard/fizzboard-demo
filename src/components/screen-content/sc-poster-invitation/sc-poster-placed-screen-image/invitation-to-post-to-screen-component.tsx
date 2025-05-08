@@ -2,7 +2,7 @@ import { PutYourPostHereComponent } from "../../post-types/no-post/put-your-post
 import { Dimensions } from ".";
 import { FzbScreenConfigPosterPlacedScreenImageData } from "~/zod-types/screen-config/fzb-poster-placed-screen-image";
 import { QRCodeSVG } from "qrcode.react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
 
 
 interface InvitationToPostToScreenComponentProps {
@@ -41,9 +41,12 @@ export const InvitationToPostToScreenComponent = (props: InvitationToPostToScree
       <Typography>
         {screenConfig.invitationParameters.aboveQrCodeText}
       </Typography>
-      <QRCodeSVG 
-        value={sendPostToScreenUrl}
-      />
+
+      <Link href={sendPostToScreenUrl} target="_blank" rel="noopener noreferrer">
+        <QRCodeSVG 
+          value={sendPostToScreenUrl}
+        />
+      </Link>
 
       <Typography>
         {screenConfig.invitationParameters.belowQrCodeText}
