@@ -117,6 +117,7 @@ export const MultiScreen2x2WithSomePosts: Story = {
           id: post2Id,
           name: 'Test Post 2',
           imageUrl: 'https://georgekarbusphotography.com/wp-content/uploads/2018/04/best_orca_killer_whale_underwater_photos.jpg',
+          backgroundColor: '#000000',
         }
       },
       {
