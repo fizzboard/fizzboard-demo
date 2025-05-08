@@ -11,22 +11,6 @@ export const BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID = "settingId";
 export const POST_TO_SCREEN_URL_PARAMS_DEMO_USER_PROFILE_ID = "demoUserId";
 
 
-// export const createBoardUrl = (
-//   boardId: FzbBoardId,
-//   rowCount: number,
-//   columnCount: number,
-//   boardLocationSettingId: BoardLocationSettingId
-// ) => {
-
-//   const boardUrl = joinPaths(SERVER_URL, "/boards/", boardId);
-//   const boardUrlWithParams = boardUrl + "?" + 
-//     BOARD_URL_PARAMS_ROW_COUNT + "=" + rowCount + "&" +
-//     BOARD_URL_PARAMS_COLUMN_COUNT + "=" + columnCount + "&" +
-//     BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID + "=" + boardLocationSettingId;
-//   return boardUrlWithParams;
-// }
-
-
 export const createShowBoardUrl = (
   boardId: FzbBoardId,
   _rowCount: number,
@@ -36,12 +20,6 @@ export const createShowBoardUrl = (
 
   const boardUrl = joinPaths(SERVER_URL, "/boards/", boardId);
   return boardUrl;
-
-  // const boardUrlWithParams = boardUrl + "?" + 
-  //   BOARD_URL_PARAMS_ROW_COUNT + "=" + rowCount + "&" +
-  //   BOARD_URL_PARAMS_COLUMN_COUNT + "=" + columnCount + "&" +
-  //   BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID + "=" + boardLocationSettingId;
-  // return boardUrlWithParams;
 }
 
 export const createSendPostToScreenUrl = (screenId: FzbScreenId) => {

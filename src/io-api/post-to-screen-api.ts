@@ -4,5 +4,6 @@ import { FzbPostData } from "~/zod-types/posts/fzb-post";
 
 export interface IPostToScreenApi {
   setPostDataJsonForGridLocation: (gridLocation: FzbScreenSlotId, postData: FzbPostData) => Promise<void>;
+  clearPostDataJsonForGridLocation: (gridLocation: FzbScreenSlotId) => Promise<void>;
 }
 

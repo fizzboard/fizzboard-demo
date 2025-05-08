@@ -22,6 +22,8 @@ import { useState } from "react";
 import { FzbScreenConfigData } from "~/zod-types/screen-config/fzb-screen-config";
 import { UserBoard } from "~/zod-types/demo-users/user-board";
 import { createShowBoardUrl } from "~/url-utils";
+import { FizzBoardTbStoreBoardScreensProvider } from "~/tinybase/FizzBoardTbStoreBoardScreensProvider";
+import { ClearAllPostsButton } from "./clear-all-posts-button";
 
 
 type FormData = z.input<typeof FzbBoardConfigSchema> & {
@@ -60,6 +62,7 @@ export const DemoMyBoardConfigPage = () => {
       boardLocationSettingId: board?.boardLocationSettingId,
     },
   });
+
 
   if (!board) {
     return <div>Board not found - {boardId}</div>;
@@ -124,152 +127,147 @@ export const DemoMyBoardConfigPage = () => {
     setAllScreenSettings(newAllScreenSettings);
   };
 
+
   return (
     <FizzBoardAppFrame>
-      <DefaultAppContainer>
-        <Typography variant="h4" component="h1" gutterBottom>
-          FizzBoard Config & Launcher
-        </Typography>
-        <form 
-          // onSubmit={handleSubmit(onSubmit)}
-        >
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            
-            <TextField
-              label="Board ID"
-              {...register("boardId")}
-              error={!!errors.boardId}
-              helperText={errors.boardId?.message}
-              disabled
-            />
-
-            <TextField
-              label="Board Name"
-              {...register("name")}
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              disabled
-            />
-
-            <FormControl fullWidth error={!!errors.gridDimensionsId}>
-              <InputLabel>Board Setting</InputLabel>
-
-              <Select
+      <FizzBoardTbStoreBoardScreensProvider tbBoardStoreId={boardId}>
+        <DefaultAppContainer>
+          <Typography variant="h4" component="h1" gutterBottom>
+            FizzBoard Config & Launcher
+          </Typography>
+          <form 
+            // onSubmit={handleSubmit(onSubmit)}
+          >
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              
+              <TextField
+                label="Board ID"
+                {...register("boardId")}
+                error={!!errors.boardId}
+                helperText={errors.boardId?.message}
                 disabled
-                label="Board Setting"
-                value={boardLocationSettingId}
-                onChange={(e) => {
-                  const selectedOptionId = e.target.value as BoardLocationSettingId;
-                  const selectedOption = BOARD_LOCATION_SETTINGS.find(option => option.id === selectedOptionId);
-                  if (selectedOption) {
-                    register("boardLocationSettingId").onChange({
-                      target: {
-                        value: selectedOptionId,
-                        name: "boardLocationSettingId"
-                      }
-                    });
-                  }
+              />
+
+              <TextField
+                label="Board Name"
+                {...register("name")}
+                error={!!errors.name}
+                helperText={errors.name?.message}
+                disabled
+              />
+
+              <FormControl fullWidth error={!!errors.gridDimensionsId}>
+                <InputLabel>Board Setting</InputLabel>
+
+                <Select
+                  disabled
+                  label="Board Setting"
+                  value={boardLocationSettingId}
+                  onChange={(e) => {
+                    const selectedOptionId = e.target.value as BoardLocationSettingId;
+                    const selectedOption = BOARD_LOCATION_SETTINGS.find(option => option.id === selectedOptionId);
+                    if (selectedOption) {
+                      register("boardLocationSettingId").onChange({
+                        target: {
+                          value: selectedOptionId,
+                          name: "boardLocationSettingId"
+                        }
+                      });
+                    }
+                  }}
+                >
+                  {BOARD_LOCATION_SETTINGS.map((option) => {
+                    return (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.label}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
+
+                {errors.gridDimensionsId && (
+                  <Typography color="error" variant="caption">
+                    {errors.gridDimensionsId.message}
+                  </Typography>
+                )}
+              </FormControl>
+
+              <FormControl error={!!errors.gridDimensionsId}>
+                <InputLabel>Grid Dimensions</InputLabel>
+
+                <Select
+                  disabled
+                  label="Grid Dimensions"
+                  value={gridDimensionsId}
+                  onChange={(e) => {
+                    const selectedOptionId = e.target.value as GridDimensionId;
+                    const selectedOption = GRID_DIMENSION_OPTIONS.find(option => option.id === selectedOptionId);
+                    if (selectedOption) {
+                      register("gridDimensionsId").onChange({
+                        target: {
+                          value: selectedOption.id,
+                          name: "gridDimensionsId"
+                        }
+                      });
+                    }
+                  }}
+                >
+                  {Object.values(GRID_DIMENSION_OPTIONS).map((option) => {
+                    return (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.label}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
+
+                {errors.gridDimensionsId && (
+                  <Typography color="error" variant="caption">
+                    {errors.gridDimensionsId.message}
+                  </Typography>
+                )}
+              </FormControl>
+
+              <Button 
+                type="button" 
+                variant="outlined" 
+                color="primary" 
+                fullWidth
+                onClick={() => {
+                  console.log("Configure Grid Settings button clicked");
+                  setIsGridSettingsDialogOpen(true);
                 }}
               >
-                {BOARD_LOCATION_SETTINGS.map((option) => {
-                  return (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.label}
-                    </MenuItem>
-                  )
-                })}
-              </Select>
+                Configure Grid Settings
+              </Button>
 
-              {errors.gridDimensionsId && (
-                <Typography color="error" variant="caption">
-                  {errors.gridDimensionsId.message}
-                </Typography>
-              )}
-            </FormControl>
+              <ClearAllPostsButton />
 
-            <FormControl error={!!errors.gridDimensionsId}>
-              <InputLabel>Grid Dimensions</InputLabel>
-
-              <Select
-                disabled
-                label="Grid Dimensions"
-                value={gridDimensionsId}
-                onChange={(e) => {
-                  const selectedOptionId = e.target.value as GridDimensionId;
-                  const selectedOption = GRID_DIMENSION_OPTIONS.find(option => option.id === selectedOptionId);
-                  if (selectedOption) {
-                    register("gridDimensionsId").onChange({
-                      target: {
-                        value: selectedOption.id,
-                        name: "gridDimensionsId"
-                      }
-                    });
-                  }
-                }}
+              <Button 
+                type="button" 
+                variant="contained" 
+                color="secondary" 
+                fullWidth
+                onClick={onLaunchClicked}
+                // type="submit"
               >
-                {Object.values(GRID_DIMENSION_OPTIONS).map((option) => {
-                  return (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.label}
-                    </MenuItem>
-                  )
-                })}
-              </Select>
+                Launch
+              </Button>
+            </Box>
+          </form>
 
-              {errors.gridDimensionsId && (
-                <Typography color="error" variant="caption">
-                  {errors.gridDimensionsId.message}
-                </Typography>
-              )}
-            </FormControl>
-
-            <Button 
-              type="button" 
-              variant="outlined" 
-              color="primary" 
-              fullWidth
-              onClick={() => {
-                console.log("Configure Grid Settings button clicked");
-                setIsGridSettingsDialogOpen(true);
-              }}
-            >
-              Configure Grid Settings
-            </Button>
-
-            <Button 
-              type="button" 
-              variant="outlined" 
-              color="primary" 
-              fullWidth
-              onClick={doSaveBoard}
-            >
-              Save
-            </Button>
-
-            <Button 
-              type="button" 
-              variant="contained" 
-              color="secondary" 
-              fullWidth
-              onClick={onLaunchClicked}
-              // type="submit"
-            >
-              Launch
-            </Button>
-          </Box>
-        </form>
-
-        {isGridSettingsDialogOpen &&
-          <GridSettingsDialog
-            open={isGridSettingsDialogOpen}
-            onClose={() => setIsGridSettingsDialogOpen(false)}
-            gridDimensionsId={gridDimensionsId}
-            boardLocationSettingId={boardLocationSettingId}
-            allScreenSettings={allScreenSettings}
-            setAllScreenSettings={handleAllScreenSettingsChange}
-          />
-        }
-      </DefaultAppContainer>
+          {isGridSettingsDialogOpen &&
+            <GridSettingsDialog
+              open={isGridSettingsDialogOpen}
+              onClose={() => setIsGridSettingsDialogOpen(false)}
+              gridDimensionsId={gridDimensionsId}
+              boardLocationSettingId={boardLocationSettingId}
+              allScreenSettings={allScreenSettings}
+              setAllScreenSettings={handleAllScreenSettingsChange}
+            />
+          }
+        </DefaultAppContainer>
+      </FizzBoardTbStoreBoardScreensProvider>
     </FizzBoardAppFrame>
   )
 }
