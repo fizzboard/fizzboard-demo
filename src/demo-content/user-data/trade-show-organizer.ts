@@ -37,6 +37,8 @@ const tradeShowOrganizerDemoBoardConfigs: DemoBoardConfigData[] = [
           screenType: "text-wrapped",
           aboveQrCodeText: "Are you a Pet Expo vendor? Want to be featured here?",
           belowQrCodeText: "Scan QR code to add your table to the board!",
+          demoUserId: "demo-user-trade-show-organizer-screen-admin",
+
         },
       },      {
         screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
@@ -44,6 +46,7 @@ const tradeShowOrganizerDemoBoardConfigs: DemoBoardConfigData[] = [
           screenType: "text-wrapped",
           aboveQrCodeText: "Are you a Pet Expo vendor? Want to be featured here?",
           belowQrCodeText: "Scan QR code to add your table to the board!",
+          demoUserId: "demo-poster-trade-show-vendor",
         },
       },
     ]

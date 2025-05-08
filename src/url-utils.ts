@@ -8,6 +8,8 @@ export const BOARD_URL_PARAMS_ROW_COUNT = "rows";
 export const BOARD_URL_PARAMS_COLUMN_COUNT = "columns";
 export const BOARD_URL_PARAMS_BOARD_LOCATION_SETTING_ID = "settingId";
 
+export const POST_TO_SCREEN_URL_PARAMS_DEMO_USER_PROFILE_ID = "demoUserId";
+
 
 // export const createBoardUrl = (
 //   boardId: FzbBoardId,
@@ -53,3 +55,8 @@ export const createSendPostToScreenUrl = (screenId: FzbScreenId) => {
 
   // return sendPostToScreenUrl;
 }
+
+export const addUrlParam = (url: string, paramName: string, paramValue: string): string => {
+  const separator = url.includes('?') ? '&' : '?';
+  return `${url}${separator}${paramName}=${paramValue}`;
+};
