@@ -22,6 +22,7 @@ export const MyPostCard = (props: MyPostCardProps) => {
         gap: 1,
         padding: 2,
         margin: 2,
+        maxWidth: 600,
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

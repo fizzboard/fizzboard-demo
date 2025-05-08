@@ -54,7 +54,7 @@ export const ScreenSettingsComponent = ({
         </Select>
         {
           screenSettings.screenType === SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK && (
-            <div>
+            <div style={{ backgroundColor: screenSettings.backgroundColor }}>
               {screenSettings.imageUrl}
             </div>
           )

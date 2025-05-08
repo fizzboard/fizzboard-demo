@@ -9,7 +9,7 @@ import { PostingToScreenDialog } from "~/components/posting-to-screen-dialog/pos
 import { FzbPostData } from "~/zod-types/posts/fzb-post";
 import { useDemoUserData } from "~/demo-content/demo-user-context";
 import { DefaultAppContainer } from "~/components/app-container/default-app-container";
-import { MyPostCardWrapper } from "./card/my-post-card-wrapper";
+import { ActionOption, MyPostCardWrapper } from "./card/my-post-card-wrapper";
 
 
 export const DemoMyPosts = () => {
@@ -58,7 +58,7 @@ export const DemoMyPosts = () => {
     setIsPosting(true);
   };
 
-  const actionOptions = [
+  const actionOptions: ActionOption[] = [
     {
       label: "Scan QR",
       onAction: handleScanQRForPostId,

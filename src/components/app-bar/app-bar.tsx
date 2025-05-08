@@ -8,13 +8,11 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { FzbMenuIcon } from "../../styling/icons";
-import { useDemoUserData } from "~/demo-content/demo-user-context";
-
+import { UserProfileMenu } from "./user-profile-menu";
 
 const APP_BAR_TEXT_ITEM_BACKGROUND_COLOR = "#F0F0F0";
 const APP_BAR_TEXT_ITEM_TEXT_COLOR = "#3C3C3C";
 export const APP_BAR_HEIGHT = '64px';
-
 
 const ButtonLinkStyle = {
   textDecoration: 'none',
@@ -26,22 +24,28 @@ const ButtonLinkStyle = {
   borderRadius: "8px",    
 }
 
-
 export const FizzBoardAppBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const { profile } = useDemoUserData();
-
 
   const handleDrawerToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   const menuItems = [
     { text: 'My Posts', path: '/my-posts' },
     { text: 'Launch Board', path: '/launch' },
+    { text: 'Choose Profile', path: '/choose-profile' },
   ];
 
   const drawer = (
@@ -111,16 +115,6 @@ export const FizzBoardAppBar = () => {
 
           {!isMobile && (
             <Box sx={{ display: 'flex', gap: 2 }}>
-{/*               
-              <Link to={"/launch"} style={{
-                textDecoration: 'none',
-              }}>
-                <Button color="inherit"
-                  sx={{
-                    ...ButtonLinkStyle,
-                  }}>Launch Board</Button>
-              </Link> */}
-
               <Link to={"/my-boards"} style={{
                 textDecoration: 'none',
               }}>
@@ -139,22 +133,22 @@ export const FizzBoardAppBar = () => {
                   }}>My Posts</Button>
               </Link>
 
-              {profile.name}
+              <IconButton
+                onClick={handleMenuOpen}
+                sx={{
+                  ...ButtonLinkStyle,
+                  padding: '3px',
+                  height: '36px',
+                  width: '36px',
+                }}
+              >
+                <Avatar sx={{ width: 30, height: 30 }} />
+              </IconButton>
 
-              <Link to={"/choose-profile"} style={{
-                textDecoration: 'none',
-              }}>
-                <IconButton
-                  sx={{
-                    ...ButtonLinkStyle,
-                    padding: '3px',
-                    height: '36px',
-                    width: '36px',
-                  }}
-                >
-                  <Avatar sx={{ width: 30, height: 30 }} />
-                </IconButton>
-              </Link>
+              <UserProfileMenu 
+                anchorEl={anchorEl}
+                onClose={handleMenuClose}
+              />
 
               <HorizontalSpacerDiv width={5} />
             </Box>

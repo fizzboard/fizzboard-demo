@@ -8,6 +8,9 @@ import { SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE } from "~/zod-types/scree
 import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK } from "~/zod-types/screen-config/fzb-show-permanent-image";
 import { ScreenContentImageLinkComponent } from "./post-types/image-link/screen-content-image-link-component";
 import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_PDF_LINK } from "~/zod-types/screen-config/fzb-show-permanent-pdf";
+import { FzbPdfLinkPostData } from "~/zod-types/posts/fzb-pdf-link-post";
+import { ScreenContentPdfLinkComponent } from "./post-types/pdf-link/screen-content-pdf-link-component";
 
 
 export interface Dimensions {
@@ -43,10 +46,26 @@ export const ScreenContentComponent = ({
         name: "Permanent Image",
         postType: "image-link",
         imageUrl: screenConfig.imageUrl,
+        backgroundColor: screenConfig.backgroundColor,
       }
 
       return (
         <ScreenContentImageLinkComponent
+          {...screenPostData}
+        />
+      );
+    }
+
+    case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_PDF_LINK: {
+      const screenPostData: FzbPdfLinkPostData = {
+        id: `pdf-link-post-${screenId}` as FzbPostId,
+        name: "Permanent PDF",
+        postType: "pdf-link",
+        pdfUrl: screenConfig.pdfUrl,
+      }
+
+      return (
+        <ScreenContentPdfLinkComponent
           {...screenPostData}
         />
       );

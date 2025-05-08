@@ -13,6 +13,7 @@ export const createDefaultScreenSettingsData = (screenType: FzbScreenConfigType)
       return {
         screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK,
         imageUrl: "https://georgekarbusphotography.com/wp-content/uploads/2018/04/best_orca_killer_whale_underwater_photos.jpg",
+        backgroundColor: "#000000",
       }
     case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK:
       return {

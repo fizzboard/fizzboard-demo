@@ -12,16 +12,6 @@ import { SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE } from "~/zod-types/scree
 
 const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
   {
-    id: "librarian-demo-board-book-recommendations" as DemoBoardConfigId,
-    name: "Book Recommendations",
-    description: "Book recommendations from library volunteers",
-    gridDimensionsId: "2x2" as GridDimensionId,
-    boardLocationSettingId: "bls-library" as BoardLocationSettingId,
-    allScreenSettings: _.range(0, 4).map(_ => ({
-      screenType: "show-permanent-blank",
-    })),
-  },
-  {
     id: "librarian-demo-board-community-events" as DemoBoardConfigId,
     name: "Community Events",
     description: "News of upcoming events and pictures/reviews from past ones",
@@ -31,6 +21,7 @@ const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
       {
         screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK,
         imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/library-reception/hosta-valley-upcoming-events.png`,
+        backgroundColor: "#000000",
       },
       {
         screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
@@ -51,8 +42,19 @@ const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
       {
         screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK,
         imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/library-reception/hosta-valley-community-library-banner.png`,
+        backgroundColor: "#000000",
       },
     ],
+  },
+  {
+    id: "librarian-demo-board-book-recommendations" as DemoBoardConfigId,
+    name: "Book Recommendations",
+    description: "Book recommendations from library volunteers",
+    gridDimensionsId: "2x2" as GridDimensionId,
+    boardLocationSettingId: "bls-library" as BoardLocationSettingId,
+    allScreenSettings: _.range(0, 4).map(_ => ({
+      screenType: "show-permanent-blank",
+    })),
   },
 ]
 
