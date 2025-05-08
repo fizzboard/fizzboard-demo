@@ -8,8 +8,8 @@ interface DefaultAppContainerProps {
 export const DefaultAppContainer = ({ children, flexDirection, ...props }: DefaultAppContainerProps) => {
   return (
     <Box sx={{ 
-      maxWidth: 600, 
-      minWidth: 400,
+      // maxWidth: 600, 
+      // minWidth: 400,
       mx: "auto", 
       p: 3,
       display: 'flex',

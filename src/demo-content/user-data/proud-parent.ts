@@ -11,12 +11,14 @@ const proudParentDemoPosts: FzbPostData[] = [
     name: "Mystery Day",
     postType: "image-link",
     imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/proud-parents/proud-parent-picture-1.jpg`,
+    backgroundColor: "#000000",
   },
   {
     id: "2" as FzbPostId,
     name: "Maker Day",
     postType: "image-link",
     imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/proud-parents/proud-parent-picture-2.jpg`,
+    backgroundColor: "#000000",
   },
   {
     id: "3" as FzbPostId,

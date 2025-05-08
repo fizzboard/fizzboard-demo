@@ -2,7 +2,9 @@ import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
 import { Box } from '@mui/material';
 
 export const ScreenContentImageLinkComponent = ({ ...postData }: FzbImageLinkPostData) => {
-  const { imageUrl } = postData;
+  const { imageUrl, backgroundColor } = postData;
+
+  console.log("backgroundColor", backgroundColor);
 
   return (
     <Box
@@ -11,7 +13,8 @@ export const ScreenContentImageLinkComponent = ({ ...postData }: FzbImageLinkPos
         height: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: backgroundColor,
       }}
     >
       <Box
@@ -21,7 +24,8 @@ export const ScreenContentImageLinkComponent = ({ ...postData }: FzbImageLinkPos
         sx={{
           maxWidth: '100%',
           maxHeight: '100%',
-          objectFit: 'contain'
+          objectFit: 'contain',
+          backgroundColor: backgroundColor
         }}
       />
     </Box>
