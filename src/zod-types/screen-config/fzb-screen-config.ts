@@ -5,12 +5,14 @@ import { FzbScreenConfigShowImageFromBoardImagePoolDataSchema } from "./fzb-show
 import { FzbScreenConfigPosterInvitationAddImageToBoardImagePoolDataSchema } from "./fzb-poster-invitation-add-image-to-board-image-pool";
 import { FzbScreenConfigShowPermanentBlankDataSchema } from "./fzb-show-permanent-blank";
 import { FzbScreenConfigShowPermanentPdfDataSchema } from "./fzb-show-permanent-pdf";
+import { FzbScreenConfigShowPermanentIframeDataSchema } from "./fzb-show-permanent-iframe";
 
 
 export const FzbScreenConfigDataSchema = z.discriminatedUnion("screenType", [
   FzbScreenConfigShowPermanentBlankDataSchema,
   FzbScreenConfigShowPermanentImageDataSchema,
   FzbScreenConfigShowPermanentPdfDataSchema,
+  FzbScreenConfigShowPermanentIframeDataSchema,
   
   FzbScreenConfigPosterPlacedScreenImageDataSchema,
 

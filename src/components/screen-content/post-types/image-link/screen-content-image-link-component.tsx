@@ -4,8 +4,6 @@ import { Box } from '@mui/material';
 export const ScreenContentImageLinkComponent = ({ ...postData }: FzbImageLinkPostData) => {
   const { imageUrl, backgroundColor } = postData;
 
-  console.log("backgroundColor", backgroundColor);
-
   return (
     <Box
       sx={{

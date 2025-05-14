@@ -4,10 +4,10 @@ import { BoardLocationSettingId } from "~/zod-types/board-config/board-location-
 import { GridDimensionId } from "~/zod-types/board-config/grid-dimensions";
 import { DemoBoardConfigData, DemoBoardConfigId } from "~/zod-types/demo-users/demo-board-config-data";
 import { UserBoard } from "~/zod-types/demo-users/user-board";
-import _ from "lodash";
 import { SERVER_HOST } from "~/utils";
 import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK } from "~/zod-types/screen-config/fzb-show-permanent-image";
 import { SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE } from "~/zod-types/screen-config/fzb-poster-placed-screen-image";
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IFRAME_LINK } from "~/zod-types/screen-config/fzb-show-permanent-iframe";
 
 
 const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
@@ -52,11 +52,23 @@ const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
     id: "librarian-demo-board-book-recommendations" as DemoBoardConfigId,
     name: "Book Recommendations",
     description: "Book recommendations from library volunteers",
-    gridDimensionsId: "2x2" as GridDimensionId,
+    gridDimensionsId: "1x2" as GridDimensionId,
     boardLocationSettingId: "bls-library" as BoardLocationSettingId,
-    allScreenSettings: _.range(0, 4).map(_ => ({
-      screenType: "show-permanent-blank",
-    })),
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK,
+        imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/library-reception/hosta-valley-community-library-banner.png`,
+        backgroundColor: "#000000",
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IFRAME_LINK,
+        // https://docs.google.com/presentation/d/e/2PACX-1vQoXudpos_smeMo0_nvBrda9AxVc8MtSGZD1w1PCCfjTVXqvx38XEjZ4aY6UDAW2Sg5q1FLlJgR4uAU/pub?start=false&loop=false&delayms=3000
+        // <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQoXudpos_smeMo0_nvBrda9AxVc8MtSGZD1w1PCCfjTVXqvx38XEjZ4aY6UDAW2Sg5q1FLlJgR4uAU/pubembed?start=true&loop=true&delayms=3000
+        iframeUrl: "https://docs.google.com/presentation/d/e/2PACX-1vQoXudpos_smeMo0_nvBrda9AxVc8MtSGZD1w1PCCfjTVXqvx38XEjZ4aY6UDAW2Sg5q1FLlJgR4uAU/" +
+                    "pubembed?start=true&loop=true&delayms=3000&rm=minimal",
+        backgroundColor: "#000000",
+      },
+    ],
   },
 ]
 
