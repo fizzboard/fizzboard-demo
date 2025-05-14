@@ -27,18 +27,22 @@ const librarianDemoBoardConfigs: DemoBoardConfigData[] = [
         screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
         invitationParameters: {
           screenType: "text-wrapped",
-          aboveQrCodeText: "Have any pictures from past events?",
-          belowQrCodeText: "Scan QR code to add your picture to the board!",
+          // aboveQrCodeText: "Have any pictures from past events?",
+          // belowQrCodeText: "Scan QR code to add your picture to the board!",
           demoUserId: "demo-poster-proud-parent",
+          backgroundImageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/library-reception/hosta-valley-upload-pictures.png`,
+          backgroundColor: "#fbf2d9",
         },
       },
       {
         screenType: SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE,
         invitationParameters: {
           screenType: "text-wrapped",
-          aboveQrCodeText: "Have any pictures from past events?",
-          belowQrCodeText: "Scan QR code to add your picture to the board!",
+          // aboveQrCodeText: "Have any pictures from past events?",
+          // belowQrCodeText: "Scan QR code to add your picture to the board!",
           demoUserId: "demo-poster-proud-parent",
+          backgroundImageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/library-reception/hosta-valley-upload-pictures.png`,
+          backgroundColor: "#fbf2d9",
         },
       },
       {
