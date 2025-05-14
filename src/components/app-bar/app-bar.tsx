@@ -44,7 +44,7 @@ export const FizzBoardAppBar = () => {
 
   const menuItems = [
     { text: 'My Posts', path: '/my-posts' },
-    { text: 'Launch Board', path: '/launch' },
+    { text: 'My Boards', path: '/my-boards' },
     { text: 'Choose Profile', path: '/choose-profile' },
   ];
 
