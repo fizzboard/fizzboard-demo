@@ -8,6 +8,7 @@ import { PostToScreenPage } from "./pages/post-to-screen";
 import { DemoChooseProfilePage } from "./pages/demo-choose-profile";
 import { DemoMyBoardsPage } from "./pages/my-boards";
 import { DemoMyBoardConfigPage } from "./pages/my-boards/my-board-config";
+import { LandingNotesAndFodderPage } from "./pages/landing-notes-and-fodder";
 
 
 export const FizzboardRoutes = () => {
@@ -29,6 +30,7 @@ export const FizzboardRoutes = () => {
         <Route path="/choose-profile" element={<DemoChooseProfilePage />} />
 
         <Route path="/screens/:id" element={<DemoScreenSlot />} />
+        <Route path="/landing-notes-and-fodder" element={<LandingNotesAndFodderPage />} />
         {/* <Route path="/test/post-to-screen" element={<TestPostToScreenPage />} /> */}
       </Routes>
     </BrowserRouter>
