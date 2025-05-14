@@ -11,6 +11,9 @@ import { FzbImageLinkPostData } from "~/zod-types/posts/fzb-image-link-post";
 import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_PDF_LINK } from "~/zod-types/screen-config/fzb-show-permanent-pdf";
 import { FzbPdfLinkPostData } from "~/zod-types/posts/fzb-pdf-link-post";
 import { ScreenContentPdfLinkComponent } from "./post-types/pdf-link/screen-content-pdf-link-component";
+import { SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IFRAME_LINK } from "~/zod-types/screen-config/fzb-show-permanent-iframe";
+import { FzbIframeLinkPostData } from "~/zod-types/posts/fzb-iframe-link-post";
+import { ScreenContentIframeLinkComponent } from "./post-types/iframe-link/screen-content-iframe-link-component";
 
 
 export interface Dimensions {
@@ -66,6 +69,21 @@ export const ScreenContentComponent = ({
 
       return (
         <ScreenContentPdfLinkComponent
+          {...screenPostData}
+        />
+      );
+    }
+
+    case SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IFRAME_LINK: {
+      const screenPostData: FzbIframeLinkPostData = {
+        id: `iframe-link-post-${screenId}` as FzbPostId,
+        name: "Permanent Iframe",
+        postType: "iframe-link",
+        iframeUrl: screenConfig.iframeUrl,
+      }
+
+      return (
+        <ScreenContentIframeLinkComponent
           {...screenPostData}
         />
       );

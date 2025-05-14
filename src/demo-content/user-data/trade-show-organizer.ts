@@ -18,9 +18,6 @@ const tradeShowOrganizerDemoBoardConfigs: DemoBoardConfigData[] = [
     description: "Pet Expo vendor list",
     gridDimensionsId: "2x2" as GridDimensionId,
     boardLocationSettingId: "bls-trade-show" as BoardLocationSettingId,
-    // allScreenSettings: _.range(0, 2).map(_ => ({
-    //   screenType: "show-permanent-blank",
-    // })),
     allScreenSettings: [
       {
         screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK,
@@ -52,16 +49,25 @@ const tradeShowOrganizerDemoBoardConfigs: DemoBoardConfigData[] = [
       },
     ]
   },
-  // {
-  //   id: "demo-board-config-trade-show-organizer-craft-fair" as DemoBoardConfigId,
-  //   name: "Craft Fair",
-  //   description: "Craft Fair vendor list",
-  //   gridDimensionsId: "2x1" as GridDimensionId,
-  //   boardLocationSettingId: "bls-trade-show" as BoardLocationSettingId,
-  //   allScreenSettings: _.range(0, 2).map(_ => ({
-  //     screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_BLANK,
-  //   })),
-  // },
+  {
+    id: "demo-board-config-trade-show-organizer-pet-expo-preferred-vendor" as DemoBoardConfigId,
+    name: "Pet Expo - Preferred Vendor",
+    description: "Pet Expo with preferred vendor sponsor",
+    gridDimensionsId: "1x2" as GridDimensionId,
+    boardLocationSettingId: "bls-trade-show" as BoardLocationSettingId,
+    allScreenSettings: [
+      {
+        screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK,
+        imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/pet-expo/pet-expo-banner.jpg`,
+        backgroundColor: "#000000",
+      },
+      {
+        screenType: SCREEN_CONFIG_TYPE_SHOW_PERMANENT_IMAGE_LINK,
+        imageUrl: `${SERVER_HOST}/fizzboard-demo/assets/demo-assets/pet-expo-vendor/super-pet-supplies-banner.jpg`,
+        backgroundColor: "#000000",
+      },
+    ],
+  },
   {
     id: "demo-board-config-trade-show-organizer-food-court" as DemoBoardConfigId,
     name: "Food Court",
