@@ -34,7 +34,9 @@ export const InvitationToPostToScreenComponent = (props: InvitationToPostToScree
   const urlWithDemoUserId = screenConfig.invitationParameters.demoUserId ?
     addUrlParam(sendPostToScreenUrl, POST_TO_SCREEN_URL_PARAMS_DEMO_USER_PROFILE_ID, screenConfig.invitationParameters.demoUserId) :
     sendPostToScreenUrl;
-  
+
+  const backgroundImageUrl = screenConfig.invitationParameters.backgroundImageUrl || '';
+  const backgroundColor = screenConfig.invitationParameters.backgroundColor || '#FFFFFF';
   return (
     <Box 
       display="flex"
@@ -42,20 +44,36 @@ export const InvitationToPostToScreenComponent = (props: InvitationToPostToScree
       alignItems="center"
       justifyContent="center"
       gap={2}
+      sx={{
+        backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none',
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100%',
+        width: '100%',
+        backgroundColor,
+      }}
     > 
-      <Typography>
-        {screenConfig.invitationParameters.aboveQrCodeText}
-      </Typography>
+      {screenConfig.invitationParameters.aboveQrCodeText && (
+        <Typography>
+          {screenConfig.invitationParameters.aboveQrCodeText}
+        </Typography>
+      )}
 
       <Link href={urlWithDemoUserId} target="_blank" rel="noopener noreferrer">
         <QRCodeSVG 
           value={urlWithDemoUserId}
+          size={132}
+          bgColor="#FFFFFF"
+          fgColor="#000000"
         />
       </Link>
 
-      <Typography>
-        {screenConfig.invitationParameters.belowQrCodeText}
-      </Typography>
+      {screenConfig.invitationParameters.belowQrCodeText && (
+        <Typography>
+          {screenConfig.invitationParameters.belowQrCodeText}
+        </Typography>
+      )}
     </Box>
   )
 };

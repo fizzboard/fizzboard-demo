@@ -5,8 +5,10 @@ export const SCREEN_CONFIG_TYPE_POSTER_PLACED_SCREEN_IMAGE = 'poster-placed-scre
 
 export const PosterPlaceScreenImageInvitationParametersSchema = z.object({
   screenType: z.literal('text-wrapped'),
-  aboveQrCodeText: z.string(),
-  belowQrCodeText: z.string(),
+  aboveQrCodeText: z.string().optional(),
+  belowQrCodeText: z.string().optional(),
+  backgroundImageUrl: z.string().optional(),
+  backgroundColor: z.string().optional(),
   demoUserId: z.string(),
 });
 
